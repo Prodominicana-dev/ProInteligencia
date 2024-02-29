@@ -1,0 +1,70 @@
+{
+  "tools": [
+    {
+      "title": "ProInteligencia",
+      "description": "El Sistema Nacional de Inteligencia de Mercados de la Dirección de Inteligencia de Mercados de ProDominicana, es un conjunto de subsistemas de alertas, oportunidades, amenazas y obstaculos que pueda enfrentar el comercio exterior y la atraccién de inversion extranjera directa (IED) de la Republica Dominicana.",
+      "color": "bg-gradient-to-br from-45% from-[#062381] via-[#2997F2]/50 to-[#1AD25D]",
+      "fromColorPercentaje": "45%",
+      "fromColor": "[#062381]",
+      "viaColor": "[#2997F2]/50",
+      "toColor": "[#1AD25D]",
+      "background": "/videos/world.mp4",
+      "logo": "/images/logo/prointeligencia-white.png",
+      "root": "/",
+      "gradientPos": "br",
+      "visible": false
+    },
+    {
+      "title": "DATA MARKET",
+      "description": "Analice estadísicas en materia de exportación e inversión en el pais.",
+      "color": "green-500",
+      "fromColor": "green-500",
+      "toColor": "sky-600",
+      "background": "/videos/world.mp4",
+      "icon": "/svg/datamarketicon.svg",
+      "logo": "/images/logo/datamarket.svg",
+      "root": "/",
+      "gradientPos": "br",
+      "visible": true
+    },
+    {
+      "title": "AlertasIED",
+      "description": "Analice oportunidades, tendencias, normativas y amenazas del contexto global de inversión.",
+      "color": "",
+      "fromColor": "pink-600",
+      "toColor": "violet-800",
+      "background": "/videos/world.mp4",
+      "icon": "/svg/alertaIEDicon.svg",
+      "logo": "/images/logo/alertaIED.svg",
+      "root": "/",
+      "gradientPos": "br",
+      "visible": true
+    },
+    {
+      "title": "Alertas Comerciales",
+      "description": "Consulte oportunidades, amenazas, obstáculos y actualizaciones de interés para el sector exportador.",
+      "color": "",
+      "fromColor": "sky-500",
+      "toColor": "purple-700",
+      "background": "/videos/world.mp4",
+      "icon": "/svg/alertacomercialicon.svg",
+      "logo": "/images/logo/alertacomercial.svg",
+      "root": "/",
+      "gradientPos": "br",
+      "visible": true
+    },
+    {
+      "title": "Acceso a Mercado",
+      "description": "Consulte medidas, requisitos y regulaciones para las mercancías exportadas desde República Dominicana.",
+      "color": "yellow-400",
+      "fromColor": "yellow-400",
+      "toColor": "red-500",
+      "background": "/videos/world.mp4",
+      "icon": "/svg/accesoamercadoicon.svg",
+      "logo": "/images/logo/accesoamercado.svg",
+      "root": "/",
+      "gradientPos": "br",
+      "visible": true
+    }
+  ]
+}
