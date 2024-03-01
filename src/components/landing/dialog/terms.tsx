@@ -22,9 +22,9 @@ export default function TermsDialog({
       open={open}
       size="lg"
       handler={handleOpen}
-      className="flex justify-center h-[90vh] w-full py-10 bg-white overflow-auto no-scrollbar text-black"
+      className="flex justify-center h-[90vh] w-full py-10 bg-white text-black"
     >
-      <DialogBody className="flex flex-col w-11/12 gap-10 py-10 text-black">
+      <DialogBody className="flex flex-col w-11/12 gap-10 py-10 overflow-auto text-black no-scrollbar">
         <h1 className="text-3xl text-black font-custom">Términos de Uso</h1>
         <div className="flex flex-col gap-2 text-lg text-black font-montserrat">
           <p>

@@ -174,13 +174,14 @@ export function Sidebar({ visible }: any) {
       `}
     >
       <div className="h-full overflow-x-hidden overflow-y-auto no-scrollbar">
-        <div className="p-4 mb-2 text-white">
+        <div className="flex items-center justify-center w-full p-4 mb-2 text-white">
           <Link href={"/"}>
             <Image
-              src={"/prointeligencia.svg"}
+              src={"/favicon.svg"}
               alt=""
               width={1920}
               height={1080}
+              className={`group-hover:w-36 w-10 duration-700`}
             ></Image>
           </Link>
         </div>
@@ -197,7 +198,7 @@ export function Sidebar({ visible }: any) {
                   ? "/dashboard/settings/datamarket"
                   : "/dashboard/datamarket"
               }
-              iconUrl={"/svg/datamarket/icon2.svg"}
+              iconUrl={"/svg/datamarket/datamarket-white.svg"}
             />
           ) : (
             <Accordion
@@ -218,19 +219,19 @@ export function Sidebar({ visible }: any) {
                 >
                   <ListItemPrefix>
                     <Image
-                      src={"/svg/datamarket/icon2.svg"}
+                      src={"/svg/datamarket/datamarket-white.svg"}
                       width={600}
                       height={600}
                       draggable={false}
                       alt=""
-                      className="w-10 h-10 text-white duration-700 group-hover:h-7 group-hover:w-7"
+                      className="text-white duration-700 size-12 group-hover:h-7 group-hover:w-7"
                     />
                   </ListItemPrefix>
                   <Typography
                     color="white"
                     className="hidden mr-auto font-normal duration-300 opacity-0 group-hover:flex group-hover:opacity-100"
                   >
-                    DataMarket
+                    Data Market
                   </Typography>
                 </AccordionHeader>
               </ListItem>
@@ -274,7 +275,7 @@ export function Sidebar({ visible }: any) {
                 ? "/dashboard/settings/accesoamercado"
                 : "/dashboard/accesoamercado"
             }
-            iconUrl={"/svg/accesoamercado/icon.svg"}
+            iconUrl={"/svg/accesoamercado/accesoamercado-white.svg"}
           />
           <SidebarItem
             title={"Alertas Comerciales"}
@@ -283,7 +284,7 @@ export function Sidebar({ visible }: any) {
                 ? "/dashboard/settings/alertacomercial"
                 : "/dashboard/alertacomercial"
             }
-            iconUrl={"/svg/alertacomercial/icon.svg"}
+            iconUrl={"/svg/alertacomercial/alertacomercial-white.svg"}
           />
           <SidebarItem
             title={"Alertas de IED"}
@@ -292,13 +293,13 @@ export function Sidebar({ visible }: any) {
                 ? "/dashboard/settings/alertaIED"
                 : "/dashboard/alertaIED"
             }
-            iconUrl={"/svg/alertaIED/icon.svg"}
+            iconUrl={"/svg/alertaIED/alertaIED-white.svg"}
           />
 
           <SidebarItem
             title={"Publicaciones"}
             url={isConfig ? "/dashboard/settings/posts" : "/dashboard/posts"}
-            iconUrl={"/svg/post/icon.svg"}
+            iconUrl={"/svg/post/posts-white.svg"}
           />
 
           <SidebarItem
@@ -306,7 +307,7 @@ export function Sidebar({ visible }: any) {
             url={
               isConfig ? "/dashboard/settings/partners" : "/dashboard/partners"
             }
-            iconUrl={"/svg/partner/icon.svg"}
+            iconUrl={"/svg/partner/partner-white.svg"}
           />
 
           {isConfig ? (
@@ -374,7 +375,7 @@ function SidebarItem({ title, url, iconUrl }: any) {
             height={600}
             draggable={false}
             alt=""
-            className="w-10 h-10 text-white duration-700 group-hover:h-7 group-hover:w-7"
+            className="text-white duration-700 size-12 group-hover:h-7 group-hover:w-7"
           />
         </ListItemPrefix>
         <Typography
