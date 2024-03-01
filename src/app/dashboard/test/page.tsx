@@ -14,7 +14,7 @@ import { createTw } from "react-pdf-tailwind";
 import Html from "react-pdf-html";
 
 export default function Page() {
-  const { data, isLoading }: any = useAccesoaMercado(1);
+  const { data, isLoading } = useAccesoaMercado("");
   console.log(data);
   const [accesoamercadoData, setAccesoaMercadoData] = useState<any>([]);
   useEffect(() => {
