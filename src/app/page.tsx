@@ -158,7 +158,7 @@ export default function Page() {
         <div className="items-center justify-center hidden w-full lg:flex">
           <div className="flex items-center justify-between w-10/12 p-5 bg-transparent md:p-10">
             <Image
-              src="/ProIntelligence.svg"
+              src="/ProInteligencia.svg"
               width={240}
               height={240}
               alt="prointeligencia"

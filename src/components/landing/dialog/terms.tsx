@@ -186,21 +186,14 @@ export default function TermsDialog({
               en ponerse en contacto con nosotros a través de los siguientes
               canales:
             </p>
-            <p className="font-montserrat">
+            <div className="font-montserrat">
               <strong>Vía correo electrónico:</strong>{" "}
-              <Link
-                href={"mailto:servicios@prodominicana.gob.do"}
-                className="font-bold"
-              >
-                servicios@prodominicana.gob.do
-              </Link>
-            </p>
-            <p className="font-montserrat">
+              <p className="font-bold">servicios@prodominicana.gob.do</p>
+            </div>
+            <div className="font-montserrat">
               <strong>Vía telefónica:</strong>
-              <Link href={"tel:+18095305505"} className="font-bold">
-                (809) 530-5505
-              </Link>
-            </p>
+              <p className="font-bold">(809) 530-5505</p>
+            </div>
             <p className="pb-10 text-lg text-black font-montserrat">
               Estamos aquí para atender sus consultas y colaborar de manera
               efectiva.
