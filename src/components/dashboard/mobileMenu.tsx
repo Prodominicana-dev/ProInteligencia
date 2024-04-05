@@ -33,6 +33,7 @@ import { tokenAtom } from "@/src/state/states";
 import axios from "axios";
 import { hasAnyPermission } from "./navbar";
 import React from "react";
+import DashboardIcon from "../svg/dashboardIcon";
 
 export default function MobileMenu({ isOpen, onClose }: any) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -199,6 +200,16 @@ export default function MobileMenu({ isOpen, onClose }: any) {
         <div className="flex flex-col h-full gap-4 p-2">
           <List className="flex flex-col justify-between h-full">
             <div>
+              <Link href={"/dashboard"} onClick={onClose}>
+                <ListItem className="focus:bg-transparent">
+                  <ListItemPrefix>
+                    <DashboardIcon color="navy" />
+                  </ListItemPrefix>
+                  <Typography className="mr-auto font-normal text-navy">
+                    Dashboard
+                  </Typography>
+                </ListItem>
+              </Link>
               <Accordion
                 open={open === 1}
                 icon={

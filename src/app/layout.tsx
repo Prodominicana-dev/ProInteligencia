@@ -6,7 +6,7 @@ import GoogleAnalytics from "../components/googleAnalytics";
 
 export const metadata = {
   title: "ProInteligencia",
-  description: "Sistema Nacional de Inteligencia de Mercados",
+  description: "Sistema de Inteligencia de Mercados",
   icons: {
     icon: ["/favicon.ico"],
   },

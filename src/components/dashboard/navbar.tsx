@@ -16,14 +16,16 @@ import { datamarketTitleAtom } from "@/src/state/states";
 export function NavbarDashboard({ toggleSidebar, openDrawer, openNav }: any) {
   const [datamarketTitle] = useAtom(datamarketTitleAtom);
   const routes = [
-    { path: "accesoamercado", title: "Acceso a Mercado" },
+    { path: "accesoamercado", title: "Acceso a Mercados" },
     { path: "alertacomercial", title: "ALERTAS COMERCIALES" },
     { path: "alertaIED", title: "ALERTAS DE IED" },
     { path: "datamarket", title: datamarketTitle },
   ];
   const pathname = usePathname();
   const currentPath = pathname.toLowerCase();
-  const currentRoute = routes.find((route) => currentPath.includes(route.path));
+  const currentRoute = routes.find((route) =>
+    currentPath.includes(route.path.toLowerCase())
+  );
   const title = currentRoute ? currentRoute.title : "ProInteligencia";
   const [suscribeOpen, setSuscribeOpen] = useState(false);
   const [suscribeAlertaIED, setSuscribeAlertaIED] = useState(false);
@@ -45,6 +47,7 @@ export function NavbarDashboard({ toggleSidebar, openDrawer, openNav }: any) {
     setSuscribeAlertaIED(!suscribeAlertaIED);
   };
   const router = useRouter();
+  console.log(pathname);
   return (
     <Navbar
       color="white"

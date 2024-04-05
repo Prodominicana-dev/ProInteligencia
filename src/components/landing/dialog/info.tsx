@@ -32,12 +32,12 @@ export default function InfoDialog({
   return (
     <Dialog
       open={open}
-      size="lg"
+      size="md"
       handler={handleOpen}
       className="w-full py-10 md:py-0 md:h-[50vh] bg-white flex justify-center items-center"
     >
       <DialogBody className="flex flex-col w-11/12 gap-10 text-black h-5/6 md:flex-row">
-        <div className="flex flex-col justify-center w-full gap-5 md:w-6/12">
+        <div className="flex flex-col justify-center w-full gap-5">
           <div className="flex flex-row items-center gap-5">
             <div
               className={`flex items-center justify-center w-16 md:w-24 p-2 bg-gradient-to-br ${color} rounded-lg`}
@@ -64,7 +64,7 @@ export default function InfoDialog({
             </Link>
           </div>
         </div>
-        <div className="relative flex-col hidden w-full gap-5 md:flex md:w-6/12">
+        {/* <div className="relative flex-col hidden w-full gap-5 md:flex md:w-6/12">
           <div className="absolute left-0 z-10 rounded-lg -top-20 ">
             <Image
               src={imageList[0] || "/images/landing/graphics.png"}
@@ -92,7 +92,7 @@ export default function InfoDialog({
               className="object-cover h-[12rem] w-[16rem] rounded-lg"
             />
           </div>
-        </div>
+        </div> */}
       </DialogBody>
     </Dialog>
   );

@@ -190,8 +190,8 @@ export default function Page() {
           </div>
           <div className="w-full text-xs font-normal text-center text-white sm:w-6/12 sm:p-8">
             Si desea solicitar la incorporación de un reporte producto - mercado
-            a esta heraccesoamercadoenta, puede ponerse en contacto con
-            ProDominicana a través de{" "}
+            a esta herramienta, puede ponerse en contacto con ProDominicana a
+            través de{" "}
             <Link href={"mailto:accesoamercado@prodominicana.gob.do"}>
               <span className="text-blue-400">
                 accesoamercado@prodominicana.gob.do

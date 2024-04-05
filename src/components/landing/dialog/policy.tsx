@@ -30,18 +30,18 @@ export default function PolicyDialog({
         </h1>
         <div className="flex flex-col gap-2 text-lg text-black font-montserrat">
           <p>
-            Bienvenido a ProInteligencia. En ProInteligencia ("ProInteligencia"
+            {`Bienvenido a ProInteligencia. En ProInteligencia ("ProInteligencia"
             o " nosotros"), reconocemos la importancia de la privacidad de los
             usuarios y nos esforzamos por asegurar un manejo transparente y
             seguro de la información recopilada. Esta Política de Privacidad
             detalla nuestras prácticas en la recopilación de datos y describe
-            los derechos de los usuarios con respecto a sus datos personales.
+            los derechos de los usuarios con respecto a sus datos personales.`}
           </p>
           <p>
-            Esta Política de Privacidad se aplica durante su visita o
+            {`Esta Política de Privacidad se aplica durante su visita o
             utilización de nuestro sitio web u otros servicios relacionados
             (conjuntamente denominados los "Servicios"). Asimismo, se extiende a
-            posibles usuarios y clientes de nuestros productos y servicios.
+            posibles usuarios y clientes de nuestros productos y servicios.`}
           </p>
           <p>
             Al utilizar nuestros Servicios, usted acepta los términos de nuestra

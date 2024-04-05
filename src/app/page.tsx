@@ -21,9 +21,12 @@ import "swiper/css/pagination";
 import InfoDialog from "@/src/components/landing/dialog/info";
 import TermsDialog from "@/src/components/landing/dialog/terms";
 import PolicyDialog from "@/src/components/landing/dialog/policy";
+import { usePathname } from "next/navigation";
 
 export default function Page() {
   // const autoplay = useRef(Autoplay({ delay: 5000 }));
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const pathname = usePathname();
   const [currentSlide, setCurrentSlide] = useState(2);
   const [open, setOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
@@ -62,7 +65,7 @@ export default function Page() {
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
-      title: "Acceso a mercados",
+      title: "Acceso a Mercados",
       description:
         "Inicia tus exportaciones explorando la herramienta Acceso a Mercados. Consulta las medidas, requisitos y regulaciones establecidas por cada país para admitir la entrada y la comercialización de mercancías importadas desde República Dominicana.",
       image: "/svg/accesoamercado/accesoamercado.svg",
@@ -73,7 +76,7 @@ export default function Page() {
     {
       title: "Alertas Comerciales",
       description:
-        "Brindan a los exportadores información actualizada sobre oportunidades emergentes y desafíos en el comercio internacional. Impulsa tus exportaciones de manera más inteligente al mantenerte al tanto de las tendencias recientes en el mercado global.",
+        "Las Alertas Comerciales de ProInteligencia brindan a los exportadores información actualizada sobre oportunidades emergentes y desafíos en el comercio internacional. Impulsa tus exportaciones de manera más inteligente al mantenerte al tanto de las tendencias recientes en el mercado global.",
       image: "/svg/alertacomercial/alertacomercial.svg",
       imageWhite: "/svg/alertacomercial/alertacomercial-white.svg",
       link: "/dashboard/alertacomercial",
@@ -91,7 +94,7 @@ export default function Page() {
     {
       title: "Publicaciones",
       description:
-        "Descarga documentos relacionados con inversión y exportación y utiliza nuestros filtros para encontrar exactamente lo que necesitas.",
+        "Consulta documentos relacionados con inversión y exportación y utiliza nuestros filtros para encontrar exactamente lo que necesitas.",
       image: "/svg/post/posts.svg",
       imageWhite: "/svg/post/posts-white.svg",
       link: "/dashboard/posts",
@@ -107,7 +110,7 @@ export default function Page() {
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
-      title: "Acceso a mercados",
+      title: "Acceso a Mercados",
       description:
         "Inicia tus exportaciones explorando la herramienta Acceso a Mercados. Consulta las medidas, requisitos y regulaciones establecidas por cada país para admitir la entrada y la comercialización de mercancías importadas desde República Dominicana.",
       image: "/svg/accesoamercado/accesoamercado.svg",
@@ -118,7 +121,7 @@ export default function Page() {
     {
       title: "Alertas Comerciales",
       description:
-        "Brindan a los exportadores información actualizada sobre oportunidades emergentes y desafíos en el comercio internacional. Impulsa tus exportaciones de manera más inteligente al mantenerte al tanto de las tendencias recientes en el mercado global.",
+        "Las Alertas Comerciales de ProInteligencia brindan a los exportadores información actualizada sobre oportunidades emergentes y desafíos en el comercio internacional. Impulsa tus exportaciones de manera más inteligente al mantenerte al tanto de las tendencias recientes en el mercado global.",
       image: "/svg/alertacomercial/alertacomercial.svg",
       imageWhite: "/svg/alertacomercial/alertacomercial-white.svg",
       link: "/dashboard/alertacomercial",
@@ -136,7 +139,7 @@ export default function Page() {
     {
       title: "Publicaciones",
       description:
-        "Descarga documentos relacionados con inversión y exportación y utiliza nuestros filtros para encontrar exactamente lo que necesitas.",
+        "Consulta documentos relacionados con inversión y exportación y utiliza nuestros filtros para encontrar exactamente lo que necesitas.",
       image: "/svg/post/posts.svg",
       imageWhite: "/svg/post/posts-white.svg",
       link: "/dashboard/posts",
@@ -182,12 +185,18 @@ export default function Page() {
                 </MenuList>
               </Menu>
               <Link href="/dashboard/partners">Recursos</Link>
-              <Button className="bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400">
+              <a
+                href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                className="py-2 px-5 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+              >
                 Registrate
-              </Button>
-              <Button className="bg-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400">
+              </a>
+              <a
+                href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                className="py-2 px-5 bg-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+              >
                 Accede
-              </Button>
+              </a>
             </div>
           </div>
         </div>
@@ -195,12 +204,12 @@ export default function Page() {
         <div className="flex flex-col items-center justify-center h-full text-center text-white gap-7">
           <h1 className="w-full text-lg xl:text-4xl font-custom">
             Impulsando las exportaciones,
-            <div>promoviendo la inversion extranjera directa</div>
+            <div>promoviendo la inversión extranjera directa</div>
           </h1>
           <p className="w-10/12 text-sm xl:w-6/12 xl:text-lg">
-            Bienvenido a ProInteligencia una plataforma integral de herramientas
-            especializadas comercio internacional e inversión extranjera directa
-            (IED).
+            Bienvenido a ProInteligencia, una plataforma integral de
+            herramientas especializadas en comercio internacional e inversión
+            extranjera directa (IED).
           </p>
           <p className="w-10/12 text-sm xl:w-6/12 xl:text-lg">
             Explora todas nuestras herramientas

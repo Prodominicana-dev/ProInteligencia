@@ -144,9 +144,6 @@ export function Sidebar({ visible }: any) {
             `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/${url}`
           );
     }
-    if (url === "dashboard") {
-      return router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/`);
-    }
     if (url === "settings" && isConfig) {
       return router.push(
         `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/datamarket`
@@ -190,6 +187,11 @@ export function Sidebar({ visible }: any) {
             visible ? "opacity-100 visible" : "opacity-0 invisible"
           } duration-200 h-4/6`}
         >
+          <SidebarItem
+            title={"Dashboard"}
+            url={"/dashboard"}
+            iconUrl={"/svg/dashboardIcon.svg"}
+          />
           {isConfig ? (
             <SidebarItem
               title={"DataMarket"}
@@ -269,7 +271,7 @@ export function Sidebar({ visible }: any) {
           )}
 
           <SidebarItem
-            title={"Acceso a Mercado"}
+            title={"Acceso a Mercados"}
             url={
               isConfig
                 ? "/dashboard/settings/accesoamercado"

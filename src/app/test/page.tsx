@@ -273,12 +273,11 @@ export default function page() {
                 </h1>
               </div>
               <p className="w-full font-normal text-gray-400 ">
-                Inicia tus exportaciones explorando la heraccesoamercadoenta
-                Requisitos de Acceso a Mercados Internacionales (Acceso a
-                Mercado). Consulta las medidas, requisitos y regulaciones
-                establecidas por cada país para admitir la entrada y la
-                comercialización de mercancías importadas desde República
-                Dominicana.
+                Inicia tus exportaciones explorando la herramienta Requisitos de
+                Acceso a Mercados Internacionales (Acceso a Mercado). Consulta
+                las medidas, requisitos y regulaciones establecidas por cada
+                país para admitir la entrada y la comercialización de mercancías
+                importadas desde República Dominicana.
               </p>
               <Link
                 href={"/dashboard/accesoamercado"}

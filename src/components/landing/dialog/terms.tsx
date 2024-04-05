@@ -35,7 +35,7 @@ export default function TermsDialog({
             <span className="font-semibold">
               prointeligencia.prodominicana.gob.do
             </span>{" "}
-            (en adelante, "ProInteligencia").
+            {`(en adelante, "ProInteligencia").`}
           </p>
           <p>
             Al acceder y utilizar ProInteligencia, los usuarios manifiestan su
