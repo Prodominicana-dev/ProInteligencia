@@ -1,6 +1,8 @@
 "use client";
 import {
   Button,
+  Collapse,
+  Drawer,
   Menu,
   MenuHandler,
   MenuList,
@@ -22,6 +24,8 @@ import InfoDialog from "@/src/components/landing/dialog/info";
 import TermsDialog from "@/src/components/landing/dialog/terms";
 import PolicyDialog from "@/src/components/landing/dialog/policy";
 import { usePathname } from "next/navigation";
+import { Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 export default function Page() {
   // const autoplay = useRef(Autoplay({ delay: 5000 }));
@@ -35,6 +39,15 @@ export default function Page() {
   const [index, setIndex] = useState(0);
   const year = new Date().getFullYear();
   const [isLoading, setIsLoading] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(false);
+
+  const handleCollapse = () => {
+    setOpenCollapse(!openCollapse);
+  };
+
+  const openDrawer = () => setOpenMenu(true);
+  const closeDrawer = () => setOpenMenu(false);
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -51,7 +64,6 @@ export default function Page() {
     setTimeout(() => {
       setIsLoading(false);
     }, 5);
-    console.log("ya cargue");
   }, []);
 
   const tools = [
@@ -148,7 +160,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="relative w-full h-screen rounded-t-lg font-montserrat">
+    <div className="relative w-full h-screen font-montserrat">
       <video
         autoPlay
         loop
@@ -157,7 +169,63 @@ export default function Page() {
         src="/videos/digitalworld.mp4"
       ></video>
       <div className="absolute inset-0 border-0 bg-gradient-to-r from-[#000072]/60 to-[#07ef96]/60"></div>
-      <div className="absolute inset-0 flex flex-col border-0 bg-gradient-to-t from-black/40 from-[1%] to-transparent">
+      <div className="absolute p-5 inset-0 flex flex-col border-0 bg-gradient-to-t from-black/40 from-[1%] to-transparent">
+        <div className="flex items-center justify-between w-full py-2">
+          <Image
+            src="/favicon.svg"
+            width={240}
+            height={240}
+            alt="prointeligencia"
+            className="size-16"
+          />
+
+          <div className="w-2/12">
+            <button onClick={openDrawer}>
+              <Bars3Icon className="w-8 h-8 text-white" />
+            </button>
+            <Drawer open={openMenu} onClose={closeDrawer} className="">
+              <div className="flex flex-col gap-8 ">
+                <div className="h-[8rem] flex justify-center items-center w-full bg-blue-950">
+                  <Image
+                    src="/ProInteligencia.svg"
+                    width={240}
+                    height={240}
+                    alt="prointeligencia"
+                    className="w-56"
+                  />
+                </div>
+                <div className="flex flex-col gap-5 px-4">
+                  <button
+                    onClick={handleCollapse}
+                    className="flex items-center justify-between font-bold text-left text-black font-montserrat"
+                  >
+                    Herramientas{" "}
+                    <ChevronRightIcon
+                      className={`${
+                        openCollapse ? "rotate-90" : ""
+                      } text-black size-5 duration-300`}
+                    />
+                  </button>
+                  <Collapse
+                    open={openCollapse}
+                    className="flex flex-col gap-3 px-2"
+                  >
+                    {tools.slice(5).map((tool, index) => (
+                      <Link
+                        key={index}
+                        className="flex flex-row items-center gap-1 text-black outline-none hover:bg-transparent hover:text-mint"
+                        href={tool.link}
+                      >
+                        <div className="w-4 h-1 bg-black rounded-full"></div>{" "}
+                        {tool.title}
+                      </Link>
+                    ))}
+                  </Collapse>
+                </div>
+              </div>
+            </Drawer>
+          </div>
+        </div>
         <div className="items-center justify-center hidden w-full lg:flex">
           <div className="flex items-center justify-between w-10/12 p-5 bg-transparent md:p-10">
             <Image
@@ -187,13 +255,13 @@ export default function Page() {
               <Link href="/dashboard/partners">Recursos</Link>
               <a
                 href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
-                className="py-2 px-5 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+                className="px-5 py-2 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
               >
-                Registrate
+                Regístrate
               </a>
               <a
                 href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
-                className="py-2 px-5 bg-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+                className="px-5 py-2 bg-green-400 border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
               >
                 Accede
               </a>
@@ -206,16 +274,16 @@ export default function Page() {
             Impulsando las exportaciones,
             <div>promoviendo la inversión extranjera directa</div>
           </h1>
-          <p className="w-10/12 text-sm xl:w-6/12 xl:text-lg">
+          <p className="w-11/12 text-sm xl:w-6/12 xl:text-lg">
             Bienvenido a ProInteligencia, una plataforma integral de
             herramientas especializadas en comercio internacional e inversión
             extranjera directa (IED).
           </p>
-          <p className="w-10/12 text-sm xl:w-6/12 xl:text-lg">
+          <p className="w-11/12 text-sm xl:w-6/12 xl:text-lg">
             Explora todas nuestras herramientas
           </p>
           <div className="flex items-center justify-center w-full">
-            <div className="w-6/12">
+            <div className="w-8/12">
               {!isLoading && (
                 <Swiper
                   ref={swiperRef}
@@ -233,8 +301,8 @@ export default function Page() {
                   }}
                   breakpoints={{
                     320: { slidesPerView: 1, spaceBetween: 20 },
-                    640: { slidesPerView: 3, spaceBetween: 20 },
-                    1024: { slidesPerView: 5, spaceBetween: 20 },
+                    1280: { slidesPerView: 3, spaceBetween: 20 },
+                    1920: { slidesPerView: 5, spaceBetween: 20 },
                   }}
                   on={{
                     slideChange: (slide: any) => {
@@ -284,12 +352,12 @@ export default function Page() {
           </div>
           <Link
             href={tools[currentSlide].link}
-            className="flex items-center justify-center w-64 h-12 bg-transparent border-2 border-green-400 rounded-full shadow-buttonGreen"
+            className="flex items-center justify-center w-64 py-2 bg-transparent border-2 border-green-400 rounded-full shadow-buttonGreen"
           >
             Accede ahora
           </Link>
         </div>
-        <div className="py-2 text-sm text-center text-white md:py-5">
+        <div className="py-2 text-sm text-center text-white md:text-sm text-balance md:px-0 md:py-5">
           ProInteligencia © {year}. Todos los derechos reservados •{" "}
           <button
             onClick={handleTermsOpen}
