@@ -13,7 +13,7 @@ export async function generateToken() {
     }),
   };
   const { data } = await axios.request(options);
-  return data.access_token;
+  return data?.access_token || data;
 }
 
 export async function getPermissions(token: string, url: string) {
