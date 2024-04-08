@@ -4,18 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "img.icons8.com",
-        pathname: "**",
-      },
-      {
-        protocol: "https",
-        hostname: "prointeligencia.prodominicana.gob.do",
-        pathname: "**",
+        hostname: "**",
       },
       {
         protocol: "http",

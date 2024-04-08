@@ -21,14 +21,14 @@ export default function Page() {
       link: "/dashboard/alertacomercial",
     },
     {
-      name: "Alertas IED",
+      name: "Alertas de IED",
       video: "/videos/charts.mp4#t=1",
       link: "/dashboard/alertaIED",
     },
   ];
   return (
-    <div className="py-10 flex justify-center">
-      <div className="w-10/12 grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="flex justify-center py-10">
+      <div className="grid w-10/12 grid-cols-1 gap-4 lg:grid-cols-2">
         {tools.map((tool, index) => (
           <ToolCard
             name={tool.name}
@@ -61,17 +61,17 @@ function ToolCard({ name, video, link }: any) {
     <Link
       href={link}
       ref={hoverRef}
-      className="rounded-xl group relative overflow-hidden"
+      className="relative overflow-hidden rounded-xl group"
     >
       <video
         ref={videoRef}
-        className="h-full w-full object-cover group-hover:scale-125 transition-transform duration-1000"
+        className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-125"
         muted
         loop
       >
         <source src={video} type="video/mp4" className="absolute inset-0" />
       </video>
-      <div className="absolute inset-0 bg-black/40 flex justify-center items-center uppercase text-white font-bold font-custom text-2xl">
+      <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white uppercase bg-black/40 font-custom">
         {name}
       </div>
     </Link>

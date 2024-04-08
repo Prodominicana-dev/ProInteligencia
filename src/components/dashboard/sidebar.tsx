@@ -188,7 +188,7 @@ export function Sidebar({ visible }: any) {
           } duration-200 h-4/6`}
         >
           <SidebarItem
-            title={"Dashboard"}
+            title={"Inicio"}
             url={"/dashboard"}
             iconUrl={"/svg/dashboardIcon.svg"}
           />

@@ -160,7 +160,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="relative w-full h-screen font-montserrat">
+    <div className="relative w-full min-h-screen font-montserrat">
       <video
         autoPlay
         loop
@@ -170,7 +170,7 @@ export default function Page() {
       ></video>
       <div className="absolute inset-0 border-0 bg-gradient-to-r from-[#000072]/60 to-[#07ef96]/60"></div>
       <div className="absolute p-5 inset-0 flex flex-col border-0 bg-gradient-to-t from-black/40 from-[1%] to-transparent">
-        <div className="flex items-center justify-between w-full py-2">
+        <div className="flex items-center justify-between w-full py-2 lg:hidden">
           <Image
             src="/favicon.svg"
             width={240}
@@ -194,33 +194,34 @@ export default function Page() {
                     className="w-56"
                   />
                 </div>
-                <div className="flex flex-col gap-5 px-4">
-                  <button
-                    onClick={handleCollapse}
-                    className="flex items-center justify-between font-bold text-left text-black font-montserrat"
+                <div className="flex flex-col gap-3 px-4">
+                  {tools.slice(5).map((tool, index) => (
+                    <Link
+                      key={index}
+                      className="flex flex-row items-center gap-1 px-5 py-3 text-black rounded-lg outline-none hover:bg-transparent hover:text-mint bg-gray-50"
+                      href={tool.link}
+                    >
+                      {tool.title}
+                    </Link>
+                  ))}
+                  <Link
+                    className="flex flex-row items-center gap-1 px-5 py-3 text-black rounded-lg outline-none hover:bg-transparent hover:text-mint bg-gray-50"
+                    href={"/dashboard/partners"}
                   >
-                    Herramientas{" "}
-                    <ChevronRightIcon
-                      className={`${
-                        openCollapse ? "rotate-90" : ""
-                      } text-black size-5 duration-300`}
-                    />
-                  </button>
-                  <Collapse
-                    open={openCollapse}
-                    className="flex flex-col gap-3 px-2"
+                    Recursos
+                  </Link>
+                  <a
+                    href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                    className="px-5 py-2 text-center text-green-400 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
                   >
-                    {tools.slice(5).map((tool, index) => (
-                      <Link
-                        key={index}
-                        className="flex flex-row items-center gap-1 text-black outline-none hover:bg-transparent hover:text-mint"
-                        href={tool.link}
-                      >
-                        <div className="w-4 h-1 bg-black rounded-full"></div>{" "}
-                        {tool.title}
-                      </Link>
-                    ))}
-                  </Collapse>
+                    Regístrate
+                  </a>
+                  <a
+                    href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                    className="px-5 py-2 text-center bg-green-400 border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+                  >
+                    Accede
+                  </a>
                 </div>
               </div>
             </Drawer>
@@ -269,17 +270,17 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center h-full text-center text-white gap-7">
-          <h1 className="w-full text-lg xl:text-4xl font-custom">
+        <div className="flex flex-col items-center justify-center h-full gap-2 text-center text-white lg:gap-7">
+          <h1 className="w-full text-base lg:text-lg xl:text-4xl font-custom">
             Impulsando las exportaciones,
             <div>promoviendo la inversión extranjera directa</div>
           </h1>
-          <p className="w-11/12 text-sm xl:w-6/12 xl:text-lg">
+          <p className="w-11/12 text-xs lg:text-sm xl:w-6/12 xl:text-lg">
             Bienvenido a ProInteligencia, una plataforma integral de
             herramientas especializadas en comercio internacional e inversión
             extranjera directa (IED).
           </p>
-          <p className="w-11/12 text-sm xl:w-6/12 xl:text-lg">
+          <p className="w-11/12 text-xs lg:text-sm xl:w-6/12 xl:text-lg">
             Explora todas nuestras herramientas
           </p>
           <div className="flex items-center justify-center w-full">
@@ -322,7 +323,7 @@ export default function Page() {
                         <div
                           className={`${
                             currentSlide === index ? "" : ""
-                          } flex flex-col items-center self-center justify-center min-h-[12rem] gap-3`}
+                          } flex flex-col items-center self-center justify-center py5 lg:min-h-[12rem] gap-3`}
                         >
                           <Image
                             src={tool.image}
@@ -331,14 +332,14 @@ export default function Page() {
                             alt="alertacomercial"
                             className={` ${
                               currentSlide === index
-                                ? "w-24 duration-500 transition shadow-toolWhite"
-                                : "w-20 duration-500 transition"
+                                ? "w-16 lg:w-24 duration-500 transition shadow-toolWhite"
+                                : "w-12 lg:w-20 duration-500 transition"
                             } bg-white rounded-xl shadow-xl`}
                           />
                           <h1
                             className={`${
                               currentSlide === index ? "block" : "hidden"
-                            } w-full text-lg text-white font-custom`}
+                            } w-full text-base lg:text-lg text-white font-custom`}
                           >
                             {tool.title}
                           </h1>
@@ -357,7 +358,7 @@ export default function Page() {
             Accede ahora
           </Link>
         </div>
-        <div className="py-2 text-sm text-center text-white md:text-sm text-balance md:px-0 md:py-5">
+        <div className="py-2 text-xs text-center text-white md:text-sm text-balance md:px-0 lg:py-5">
           ProInteligencia © {year}. Todos los derechos reservados •{" "}
           <button
             onClick={handleTermsOpen}
