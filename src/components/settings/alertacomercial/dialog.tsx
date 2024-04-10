@@ -50,7 +50,7 @@ export default function AlertaComercialDialog({
   const [title, setTitle] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const { data: categories, isLoading } = useAlertaComercialesCategory();
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<any>();
   const { data: productsSelect }: any = useSelectProducts();
   const { data: countries }: any = useSelectCountries();
   const [selectedCountries, setSelectedCountries] = useState<any>([]);
@@ -139,7 +139,7 @@ export default function AlertaComercialDialog({
       "description",
       editor1?.getHTML() !== undefined ? editor1?.getHTML() : ""
     );
-    formData.append("categoryId", category ? category.id.toString() : "");
+    formData.append("categoryId", category?.id.toString());
     formData.append("countries", JSON.stringify(countries));
     formData.append("products", JSON.stringify(products));
     formData.append("isPublic", isPublic ? "true" : "false");

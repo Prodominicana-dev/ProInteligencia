@@ -43,7 +43,7 @@ export default function AlertaIEDDialog({
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState("");
   const { data: categories } = useAlertasIEDCategory();
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<any>();
   const [isLoadin, setIsLoadin] = useState(false);
 
   const openRef = useRef<() => void>(null);
@@ -89,7 +89,7 @@ export default function AlertaIEDDialog({
       "description",
       editor1?.getHTML() !== undefined ? editor1?.getHTML() : ""
     );
-    data.append("categoryId", category ? category.id.toString() : "");
+    data.append("categoryId", category.id.toString());
     if (files.length > 0) {
       data.append("file", files[0]);
     }
