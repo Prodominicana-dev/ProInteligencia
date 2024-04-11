@@ -28,17 +28,35 @@ export default function ProductDialog({
 
   const handleProductSubmit = async () => {
     setIsLoading(true);
+    if (product) {
+      const _product = {
+        name: productName,
+        code: productCode,
+      };
+
+      const action = updateProduct;
+
+      action({
+        id: product?.id,
+        product: _product,
+        handleOpen,
+        updateProducts,
+      }).then(() => {
+        setIsLoading(false);
+      });
+      return;
+    }
     const _product = {
-      id: product?.id ? product.id : null,
       name: productName,
       code: productCode,
     };
 
-    const action = _product.id !== null ? updateProduct : createProduct;
+    const action = createProduct;
 
     action({ product: _product, handleOpen, updateProducts }).then(() => {
       setIsLoading(false);
     });
+    return;
   };
 
   return (

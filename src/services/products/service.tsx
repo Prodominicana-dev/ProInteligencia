@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 interface ProductProps {
+  id?: string;
   product: any;
   handleOpen: () => void;
   updateProducts: () => void;
@@ -44,12 +45,13 @@ export function createProduct({
 }
 
 export function updateProduct({
+  id,
   product,
   handleOpen,
   updateProducts,
 }: ProductProps) {
   return axios
-    .patch(`${process.env.NEXT_PUBLIC_API_URL}/product/${product.id}`, product)
+    .put(`${process.env.NEXT_PUBLIC_API_URL}/product/${id}`, product)
     .then((res) => {
       if (res.status === 200) {
         notifications.show({
