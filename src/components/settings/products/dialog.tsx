@@ -29,12 +29,12 @@ export default function ProductDialog({
   const handleProductSubmit = async () => {
     setIsLoading(true);
     const _product = {
-      id: product?.id || 0,
+      id: product?.id ? product.id : null,
       name: productName,
       code: productCode,
     };
 
-    const action = _product.id !== 0 ? updateProduct : createProduct;
+    const action = _product.id !== null ? updateProduct : createProduct;
 
     action({ product: _product, handleOpen, updateProducts }).then(() => {
       setIsLoading(false);
