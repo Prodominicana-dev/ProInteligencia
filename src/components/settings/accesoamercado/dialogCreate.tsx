@@ -207,7 +207,7 @@ export default function AccesoaMercadoCreateDialog({
     setIsLoading(true);
     const data = {
       countryId: Number(selectedCountries.value.id),
-      productId: Number(selectedProducts.value.id),
+      productId: selectedProducts.value.id,
       outputRequirement: outputRequirement,
       importRequirement: importRequirement,
       technicalRequirements: technicalRequirements,
