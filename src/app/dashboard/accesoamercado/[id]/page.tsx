@@ -152,7 +152,10 @@ function SectionAccesoaMercado({ title, desc }: any) {
       <div className="inline-block mb-3 text-2xl font-semibold text-transparent bg-gradient-to-r from-purple-700 to-sky-500 bg-clip-text">
         {title}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: desc }}></div>
+      <div
+        className="flex flex-col gap-3"
+        dangerouslySetInnerHTML={{ __html: desc }}
+      ></div>
     </div>
   );
 }

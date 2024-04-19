@@ -65,7 +65,7 @@ export default function Modal({ id }: any) {
             className="object-cover w-full my-5 rounded-lg"
           />
           <div
-            className="pb-10 font-normal text-justify text-black"
+            className="flex flex-col gap-3 pb-10 font-normal text-black"
             dangerouslySetInnerHTML={{ __html: data.description }}
           ></div>
         </div>

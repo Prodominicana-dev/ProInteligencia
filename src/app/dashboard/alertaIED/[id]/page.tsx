@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
           className="object-cover w-full my-3 rounded-lg"
         />
         <div
-          className="pb-10 text-lg text-black"
+          className="flex flex-col gap-3 pb-10 text-lg text-black"
           dangerouslySetInnerHTML={{ __html: data.description }}
         ></div>
       </div>
