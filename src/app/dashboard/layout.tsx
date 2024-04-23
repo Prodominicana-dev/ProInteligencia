@@ -82,7 +82,6 @@ function RootLayoutComponent({ children, modal }: RootLayoutProps) {
         const domains = await getDomains(
           `${process.env.NEXT_PUBLIC_API_URL}/reserved-domains`
         );
-        console.log(domains);
         alertaIEDDomains = domains.data?.alertaIED;
         alertacomercialDomains = domains.data?.alertacomercial;
         // Comprobar si el correo del usuario esta en la lista de dominios, si esta en la de alertaIED colocar en localStorage que puede ver alertaIED y si esta tambien en la de alertacomercial colocar en localStorage que puede ver alertacomercial

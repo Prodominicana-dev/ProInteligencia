@@ -87,7 +87,7 @@ export default function Suscribe({ open, handleOpen, email }: SuscribeProps) {
   const handleSuscribe = async () => {
     setIsLoaded(true);
     const productsId = selectedProducts.map((product: any) =>
-      Number(product.value)
+      product.value
     );
     const countriesId = selectedCountries.map((country: any) =>
       Number(country.value)

@@ -118,7 +118,7 @@ export function Sidebar({ visible }: any) {
         url === "datamarket" ||
         url === "products" ||
         url === "users" ||
-        url === "settings"
+        url === "settings" || url === "domains"
       )
     ) {
       // dividir la url en un array por cada /
@@ -319,11 +319,17 @@ export function Sidebar({ visible }: any) {
                 url={"/dashboard/settings/products"}
                 iconUrl={"/svg/product/icon.svg"}
               />
-              {/* <SidebarItem
-              title={"Usuarios"}
-              url={"/dashboard/settings/users"}
-              iconUrl={"/images/logo/icon.svg"}
-            /> */}
+             
+            </>
+          ) : null}
+          {isConfig ? (
+            <>
+              <SidebarItem
+                title={"Dominios reservados"}
+                url={"/dashboard/settings/domains"}
+                iconUrl={"/svg/domains/icon.svg"}
+              />
+             
             </>
           ) : null}
         </List>

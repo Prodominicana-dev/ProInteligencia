@@ -89,14 +89,14 @@ export default function MobileMenu({ isOpen, onClose }: any) {
       text: "Productos",
     },
     {
-      href: "/dashboard/settings/users",
-      icon: <AlertaIEDIcon color="navy" />,
-      text: "Usuarios",
-    },
-    {
       href: "/dashboard/settings/partners",
       icon: <AlertaIEDIcon color="navy" />,
       text: "Fuentes externas",
+    },
+    {
+      href: "/dashboard/settings/domains",
+      icon: <AlertaIEDIcon color="navy" />,
+      text: "Dominios reservados",
     },
   ];
   const { user } = useUser();
