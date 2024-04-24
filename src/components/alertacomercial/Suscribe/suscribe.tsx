@@ -18,6 +18,7 @@ import { useProducts } from "@/src/services/products/service";
 import Country from "@/src/models/country";
 import Product from "@/src/models/product";
 import React from "react";
+import { editAlertaComercialSub } from "@/src/services/subscriber/service";
 
 const animatedComponents = makeAnimated();
 
@@ -56,17 +57,17 @@ export default function Suscribe({ open, handleOpen, email }: SuscribeProps) {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await axios.get(
+      const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/suscriber/${user?.email}/alertacomercial`
       );
-      if (data) {
-        const countries = data.suscriber_countries.map((c: any) => ({
+      if (res.data) {
+        const countries = res.data.suscriber_countries.map((c: any) => ({
           value: c.country.id.toString(),
           label: c.country.name,
         }));
         setSelectedCountries(countries);
 
-        const products = data.suscriber_products.map((p: any) => ({
+        const products = res.data.suscriber_products.map((p: any) => ({
           value: p.product.id.toString(),
           label: `${p.product.name} - ${p.product.code}`,
         }));
@@ -99,26 +100,14 @@ export default function Suscribe({ open, handleOpen, email }: SuscribeProps) {
       name: user?.name,
       platform: "alertacomercial",
     };
-    await axios
-      .patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/suscriber/alertacomercial`,
-        data
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          notifications.show({
-            title: "¡Suscripción Exitosa!",
-            message: "¡Te has suscrito a nuestras alertas!",
-            color: "green",
-            autoClose: 5000,
-            withCloseButton: false,
-          });
-          handleOpen();
-          setSelectedCountries([]);
-          setSelectedProducts([]);
-          setIsLoaded(false);
-        }
-      });
+    await editAlertaComercialSub(data)
+
+    
+    
+    handleOpen();
+    setSelectedCountries([]);
+    setSelectedProducts([]);
+    setIsLoaded(false);
   };
 
   return (
