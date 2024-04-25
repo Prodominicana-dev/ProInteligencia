@@ -1,7 +1,7 @@
 import { notifications } from "@mantine/notifications";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-var CryptoJS = require("crypto-js");
+
 
 export function useDomains() {
   return useQuery({
@@ -161,16 +161,9 @@ export function deleteDomain(
   update: () => void,
   userId: string
 ) {
-  const userIdEncrypted = CryptoJS.AES.encrypt(
-    userId,
-    process.env.NEXT_PUBLIC_CRYPTOJS_KEY
-  ).toString();
+  
   return axios
-    .delete(`${process.env.NEXT_PUBLIC_API_URL}/reserved-domains/${id}`, {
-      headers: {
-        Authorization: `${userIdEncrypted}`,
-      },
-    })
+    .delete(`${process.env.NEXT_PUBLIC_API_URL}/reserved-domains/${id}`) 
     .then((res) => {
       if (res.status === 200) {
         notifications.show({

@@ -332,6 +332,16 @@ export function Sidebar({ visible }: any) {
              
             </>
           ) : null}
+          {isConfig ? (
+            <>
+              <SidebarItem
+                title={"Países/Mercados"}
+                url={"/dashboard/settings/countries"}
+                iconUrl={"/svg/domains/icon.svg"}
+              />
+             
+            </>
+          ) : null}
         </List>
       </div>
 
