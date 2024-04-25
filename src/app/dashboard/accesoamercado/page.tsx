@@ -192,9 +192,9 @@ export default function Page() {
             Si desea solicitar la incorporación de un reporte producto - mercado
             a esta herramienta, puede ponerse en contacto con ProDominicana a
             través de{" "}
-            <Link href={"mailto:accesoamercado@prodominicana.gob.do"}>
+            <Link href={"mailto:accesoamercados@prodominicana.gob.do"}>
               <span className="text-blue-400">
-                accesoamercado@prodominicana.gob.do
+              accesoamercados@prodominicana.gob.do
               </span>
             </Link>
           </div>
