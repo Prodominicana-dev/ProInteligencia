@@ -26,6 +26,11 @@ import Editor from "../rich-editor/config";
 import { useAlertasIEDCategory } from "@/src/services/alertaIED/service";
 import Category from "@/src/models/category";
 import React from "react";
+import { useDomainsOptions } from "@/src/services/domains/service";
+
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+const animatedComponents = makeAnimated();
 
 export default function AlertaIEDDialog({
   alertaIED,
@@ -45,6 +50,9 @@ export default function AlertaIEDDialog({
   const { data: categories } = useAlertasIEDCategory();
   const [category, setCategory] = useState<any>();
   const [isLoadin, setIsLoadin] = useState(false);
+  const [ domainsOptions, setDomainsOptions ] = useState<any[]>([]); // [ { label: "name", value: "id" }
+  const [domains, setDomains] = useState<any[]>([]); // [ id ]
+  const { data: domainsData, isLoading: domainsLoading } = useDomainsOptions();
 
   const openRef = useRef<() => void>(null);
   const handleClickSelectFile = () => {
@@ -59,6 +67,12 @@ export default function AlertaIEDDialog({
   });
 
   useEffect(() => {
+    if(!domainsLoading && domainsData) {
+      setDomainsOptions(domainsData);
+    }
+  }, [domainsData, domainsLoading])
+
+  useEffect(() => {
     if (categories) {
       setCategory(categories[0]);
     }
@@ -70,8 +84,16 @@ export default function AlertaIEDDialog({
       setTitle(alertaIED.title);
       setCategory(alertaIED.category);
       setIsPublic(alertaIED.isPublic);
+      setDomains(alertaIED.domains);
     }
   }, [alertaIED]);
+
+
+  useEffect(() => {
+    console.log(domains)
+  }, [domains])
+
+
   const handleDrop = (acceptedFiles: FileWithPath[]) => {
     setFiles(acceptedFiles);
   };
@@ -89,6 +111,7 @@ export default function AlertaIEDDialog({
       "description",
       editor1?.getHTML() !== undefined ? editor1?.getHTML() : ""
     );
+    data.append("domains", JSON.stringify(domains));
     data.append("categoryId", category.id.toString());
     if (files.length > 0) {
       data.append("file", files[0]);
@@ -332,6 +355,29 @@ export default function AlertaIEDDialog({
               </div>
               <TextEditor editor={editor1} />
             </div>
+
+            {!isPublic && (
+              <div className="pt-5 text-lg font-normal text-black">
+              <div className="text-lg font-bold text-black">
+                Dominios permitidos para esta alerta
+              </div>
+              <Select
+                components={animatedComponents}
+                menuPosition="fixed"
+                isMulti
+                placeholder="Seleccione las categorías de su interés..."
+                
+                onChange={(e: any) => {
+                  // Agregar el seleccionado al array de dominios seleccionados
+                  setDomains(e.map((dom: any) => dom.value));
+                }}
+                    
+                options={domainsOptions}
+               
+                value={domainsOptions.filter((dom: any) => domains.includes(dom.value))}
+              />
+            </div>
+            )}
 
             <div className="flex justify-end w-full h-12 my-5 space-x-3">
               {isLoadin ? (

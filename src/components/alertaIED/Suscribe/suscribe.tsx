@@ -10,11 +10,11 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import axios from "axios";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { useEffect, useState } from "react";
 import React from "react";
 
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 const animatedComponents = makeAnimated();
 
 interface SuscribeProps {

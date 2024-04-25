@@ -14,6 +14,23 @@ export function useDomains() {
   });
 }
 
+export function useDomainsOptions() {
+  return useQuery({
+    queryKey: ["domainsConf"],
+    queryFn: async () => {
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/reserved-domains/all`;
+      const { data } = await axios.get(url);
+      // Con la data tenemos que filtrar solo los que sean alertaIED y devolverlos como label y value
+      const domains = data.filter((domain: any) => domain.platform === "alertaIED");
+      const options = domains.map((domain: any) => ({
+        label: domain.name,
+        value: domain.id,
+      }));
+      return options;
+    },
+  });
+}
+
 export async function createDomain(
   domain: any,
   update: () => void,

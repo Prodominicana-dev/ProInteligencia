@@ -14,4 +14,5 @@ export default interface AlertaIED {
   isPublic: boolean;
   countries: Country[];
   products: Product[];
+  domains: any[]
 }
