@@ -98,6 +98,11 @@ export default function MobileMenu({ isOpen, onClose }: any) {
       icon: <AlertaIEDIcon color="navy" />,
       text: "Dominios reservados",
     },
+    {
+      href: "/dashboard/settings/countries",
+      icon: <AlertaIEDIcon color="navy" />,
+      text: "Países/Mercados",
+    },
   ];
   const { user } = useUser();
   const [suscribeAlertaIED, setSuscribeAlertaIED] = useState(false);
