@@ -32,7 +32,6 @@ export function useCountryByAbbr(abbrv: string) {
     queryFn: async () => {
       const url = `${process.env.NEXT_PUBLIC_API_URL}/country/abbreviation/${abbrv}`;
       const { data } = await axios.get(url);
-      // Si tiene alguna data, devuelve true, sino false
       return data;
     },
   });

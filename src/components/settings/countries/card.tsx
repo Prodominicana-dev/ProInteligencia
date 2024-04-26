@@ -6,6 +6,7 @@ import {
   import { useState } from "react";
   import React from "react";
 import DeleteButton from "../delete";
+import EditCountryDialog from "./edit";
   
   export default function Card({
     country,
@@ -67,14 +68,14 @@ import DeleteButton from "../delete";
           />
         )} */}
         
-        {/* {open && (
-          <EditDomainDialog
+        {open && (
+          <EditCountryDialog
             open={open}
             handleOpen={handleOpen}
             updateProducts={updateProducts}
-            domain={domain}
+            country={country}
           />
-        ) } */}
+        ) }
       </>
     );
   }

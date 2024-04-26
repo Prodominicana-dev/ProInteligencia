@@ -118,7 +118,7 @@ export function Sidebar({ visible }: any) {
         url === "datamarket" ||
         url === "products" ||
         url === "users" ||
-        url === "settings" || url === "domains"
+        url === "settings" || url === "domains" || url === "countries"
       )
     ) {
       // dividir la url en un array por cada /
@@ -337,7 +337,7 @@ export function Sidebar({ visible }: any) {
               <SidebarItem
                 title={"Países/Mercados"}
                 url={"/dashboard/settings/countries"}
-                iconUrl={"/svg/domains/icon.svg"}
+                iconUrl={"/svg/country/icon.svg"}
               />
              
             </>
