@@ -173,7 +173,7 @@ export default function PostDialog({
                   accept={PDF_MIME_TYPE}
                   maxFiles={1}
                   multiple={false}
-                  maxSize={10 * 1024 * 1024}
+                  maxSize={100 * 1024 * 1024}
                   styles={{ inner: { pointerEvents: "all" } }}
                   className="w-full bg-transparent group-hover:bg-transparent"
                 >

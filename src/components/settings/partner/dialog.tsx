@@ -246,7 +246,7 @@ export default function PartnerDialog({
                   accept={IMAGE_MIME_TYPE}
                   maxFiles={1}
                   multiple={false}
-                  maxSize={5 * 1024 * 1024}
+                  maxSize={100 * 1024 * 1024}
                   styles={{ inner: { pointerEvents: "all" } }}
                   className="w-full bg-transparent border-0 group-hover:bg-transparent"
                 >
