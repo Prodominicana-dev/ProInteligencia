@@ -162,11 +162,10 @@ export default function Page() {
   return (
     <div className="relative w-full min-h-screen font-montserrat">
       <video
-        playsInline
         autoPlay
         loop
         muted
-        className="object-cover w-full h-full"
+        className="absolute top-0 left-0 object-cover w-full h-full -z-10"
         src="/videos/digitalworld.mp4"
       ></video>
       <div className="absolute inset-0 border-0 bg-gradient-to-r from-[#000072]/60 to-[#07ef96]/60"></div>
