@@ -162,6 +162,7 @@ export default function Page() {
   return (
     <div className="relative w-full min-h-screen font-montserrat">
       <video
+        playsInline
         autoPlay
         loop
         muted
