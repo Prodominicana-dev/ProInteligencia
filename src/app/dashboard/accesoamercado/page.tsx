@@ -166,7 +166,7 @@ export default function Page() {
               size="xl"
               radius="md"
               rightSection={<></>}
-              placeholder="País"
+              placeholder="Mercado"
               data={countriesSelect ? countriesSelect : []}
               searchable
               nothingFoundMessage="Nothing found..."

@@ -164,7 +164,7 @@ export default function PostDialog({
                       autoClose: 5000,
                       withCloseButton: false,
                       title: "Error",
-                      message: "El documento no puede pasar de 10 MB.",
+                      message: "El documento no puede pasar de 500 MB.",
                       color: "red",
                       loading: false,
                     });
@@ -173,7 +173,7 @@ export default function PostDialog({
                   accept={PDF_MIME_TYPE}
                   maxFiles={1}
                   multiple={false}
-                  maxSize={100 * 1024 * 1024}
+                  maxSize={500 * 1024 * 1024}
                   styles={{ inner: { pointerEvents: "all" } }}
                   className="w-full bg-transparent group-hover:bg-transparent"
                 >
