@@ -37,7 +37,7 @@ export default function DataMarketMenu({
       icon={
         <ChevronDownIcon
           strokeWidth={2.5}
-          className={`mx-auto h-4 w-4 transition-transform text-navy  ${
+          className={`mx-auto h-4 w-4 transition-transform text-white  ${
             open === 1 ? "rotate-180" : ""
           }`}
         />
@@ -51,13 +51,13 @@ export default function DataMarketMenu({
           <ListItemPrefix>
             <div></div>
           </ListItemPrefix>
-          <Typography className="mr-auto font-normal text-navy">
+          <Typography className="mr-auto font-normal text-white">
             {title}
           </Typography>
         </AccordionHeader>
       </ListItem>
       <AccordionBody className="py-1">
-        <List className="p-0 text-navy">
+        <List className="p-0 text-white">
           {data?.map((datamarket: any, key: number) => (
             <Link
               href={`/dashboard/datamarket/${datamarket.id}`}

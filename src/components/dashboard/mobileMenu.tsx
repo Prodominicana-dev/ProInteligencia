@@ -43,27 +43,27 @@ export default function MobileMenu({ isOpen, onClose }: any) {
   const navigationOptions = [
     {
       href: "/dashboard/accesoamercado",
-      icon: <AccesoaMercadoIcon color="navy" />,
+      icon: <AccesoaMercadoIcon color="white" />,
       text: "Acceso a Mercados",
     },
     {
       href: "/dashboard/alertacomercial",
-      icon: <AlertaComercialIcon color="navy" />,
+      icon: <AlertaComercialIcon color="white" />,
       text: "Alertas Comerciales",
     },
     {
       href: "/dashboard/alertaIED",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Alertas de IED",
     },
     {
       href: "/dashboard/posts",
-      icon: <Post color="navy" />,
+      icon: <Post color="white" />,
       text: "Publicaciones",
     },
     {
       href: "/dashboard/partners",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Fuentes externas",
     },
   ];
@@ -71,42 +71,42 @@ export default function MobileMenu({ isOpen, onClose }: any) {
   const navigationConfigOptions = [
     {
       href: "/dashboard/settings/datamarket",
-      icon: <DataMarketIcon color="navy" />,
+      icon: <DataMarketIcon color="white" />,
       text: "Datamarket",
     },
     {
       href: "/dashboard/settings/accesoamercado",
-      icon: <AccesoaMercadoIcon color="navy" />,
+      icon: <AccesoaMercadoIcon color="white" />,
       text: "Acceso a Mercados",
     },
     {
       href: "/dashboard/settings/alertacomercial",
-      icon: <AlertaComercialIcon color="navy" />,
+      icon: <AlertaComercialIcon color="white" />,
       text: "Alertas Comerciales",
     },
     {
       href: "/dashboard/settings/alertaIED",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Alertas de IED",
     },
     {
       href: "/dashboard/settings/products",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Productos",
     },
     {
       href: "/dashboard/settings/partners",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Fuentes externas",
     },
     {
       href: "/dashboard/settings/domains",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Dominios reservados",
     },
     {
       href: "/dashboard/settings/countries",
-      icon: <AlertaIEDIcon color="navy" />,
+      icon: <AlertaIEDIcon color="white" />,
       text: "Países/Mercados",
     },
   ];
@@ -177,21 +177,23 @@ export default function MobileMenu({ isOpen, onClose }: any) {
         open={isOpen}
         onClose={onClose}
         placement="right"
-        className="z-[9999] flex flex-col overflow-y-auto"
+        className="z-[9999] flex flex-col overflow-y-auto bg-navy"
       >
-        <div className="flex flex-col items-center justify-between bg-[url('/images/mobile-menu/accountLog.jpg')]">
+        {/* //"bg-navy
+        //bg-[url('/images/mobile-menu/accountLog.jpg')] */}
+        <div className="flex flex-col items-center justify-between bg-navy">
           <div className="flex flex-row items-center justify-between w-full px-4 pt-2">
-            <Link href={"/"}>
+            {/* <Link href={"/"}>
               <Typography variant="h5" color="white">
                 ProInteligencia
               </Typography>
-            </Link>
+            </Link> */}
             <IconButton variant="text" color="blue-gray" onClick={onClose}>
               <XMarkIcon className="w-6 h-6 text-white" />
             </IconButton>
           </div>
-          <div className="w-full p-4 space-y-4">
-            {user ? (
+          <div className="flex flex-nowrap items-center gap-4 px-4 pb-4">
+          {/* {user ? (
               <>
                 <Avatar
                   variant="circular"
@@ -205,18 +207,44 @@ export default function MobileMenu({ isOpen, onClose }: any) {
               </>
             ) : (
               <></>
+            )} */}
+          
+            <Link href="/" className="shrink-0">
+              <Avatar
+                variant="circular"
+                size="lg"
+                src="/favicon.svg"
+                alt="Inicio"
+                className="shrink-0"
+              />
+            </Link>
+
+         
+            {user && (
+              <div className="flex flex-nowrap items-center gap-2 shrink-0">
+                <Avatar
+                  variant="circular"
+                  size="lg"
+                  src={user.picture as string}
+                  alt=' logo user'
+                  className="shrink-0"
+                />
+                <Typography className="font-thin text-white shrink-0">
+                  {user.name}
+                </Typography>
+              </div>
             )}
           </div>
         </div>
-        <div className="flex flex-col h-full gap-4 p-2">
+        <div className="flex flex-col h-full gap-4 p-2 bg-navy">
           <List className="flex flex-col justify-between h-full">
             <div>
               <Link href={"/dashboard"} onClick={onClose}>
                 <ListItem className="focus:bg-transparent">
                   <ListItemPrefix>
-                    <DashboardIcon color="navy" />
+                    <DashboardIcon color="white" />
                   </ListItemPrefix>
-                  <Typography className="mr-auto font-normal text-navy">
+                  <Typography className="mr-auto font-normal text-white">
                     Dashboard
                   </Typography>
                 </ListItem>
@@ -238,15 +266,15 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                     className="p-3 border-b-0"
                   >
                     <ListItemPrefix>
-                      <DataMarketIcon color="navy" />
+                      <DataMarketIcon color="white" />
                     </ListItemPrefix>
-                    <Typography className="mr-auto font-normal text-navy">
+                    <Typography className="mr-auto font-normal text-white">
                       Datamarket
                     </Typography>
                   </AccordionHeader>
                 </ListItem>
                 <AccordionBody className="py-1">
-                  <List className="p-0 text-navy">
+                  <List className="p-0 text-white">
                     {!isLoading ? (
                       data?.map((datamarket: any, key: number) =>
                         datamarket.data.length > 1 ? (
@@ -281,7 +309,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                 <Link href={option.href} onClick={onClose} key={key}>
                   <ListItem className="focus:bg-transparent">
                     <ListItemPrefix>{option.icon}</ListItemPrefix>
-                    <Typography className="mr-auto font-normal text-navy">
+                    <Typography className="mr-auto font-normal text-white">
                       {option.text}
                     </Typography>
                   </ListItem>
@@ -293,7 +321,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                   icon={
                     <ChevronDownIcon
                       strokeWidth={2.5}
-                      className={`mx-auto h-4 w-4 transition-transform ${
+                      className={`mx-auto h-4 w-4 transition-transform  ${
                         open === 1 ? "rotate-180" : ""
                       }`}
                     />
@@ -306,17 +334,17 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                     >
                       <ListItemPrefix>
                         <CogIcon
-                          className="w-8 h-8 text-navy"
+                          className="w-8 h-8 text-white"
                           strokeWidth={1}
                         />
                       </ListItemPrefix>
-                      <Typography className="mr-auto font-normal text-navy">
+                      <Typography className="mr-auto font-normal text-white ">
                         Configuración
                       </Typography>
                     </AccordionHeader>
                   </ListItem>
                   <AccordionBody className="py-1">
-                    <List className="p-0 text-navy">
+                    <List className="p-0 text-white bg-navy">
                       {navigationConfigOptions.map(
                         (option: any, key: number) => (
                           <Link href={option.href} key={key} onClick={onClose}>
@@ -342,7 +370,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                       handleSuscribeOpen();
                       onClose();
                     }}
-                    className="flex items-center justify-center w-full h-12 p-4 bg-white border-2 text-navy rounded-xl border-navy"
+                    className="flex items-center justify-center w-full h-12 p-4 bg-white border-2 text-navy rounded-xl border-white"
                   >
                     Suscríbete
                   </button>
@@ -355,7 +383,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                       handleAlertaIEDSuscribeOpen();
                       onClose();
                     }}
-                    className="w-full flex justify-center items-center text-navy rounded-xl p-4 h-12 bg-white border-2 border-navy from-purple-500 from-[15%] via-sky-600 to-sky-400"
+                    className="w-full flex justify-center items-center text-white rounded-xl p-4 h-12 bg-navy border-2 border-navy from-purple-500 from-[15%] via-sky-600 to-sky-400"
                   >
                     Suscríbete
                   </button>
@@ -367,7 +395,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
                     ? `/api/auth/logout?returnTo=${callbackUrl}`
                     : `/api/auth/login?returnTo=${callbackUrl}`
                 }
-                className="flex items-center justify-center w-full h-12 p-4 text-white rounded-xl bg-navy"
+                className="flex items-center justify-center w-full h-12 p-4 text-navy rounded-xl bg-white"
               >
                 {user ? "Cerrar sesión" : "Iniciar sesión"}
               </a>
