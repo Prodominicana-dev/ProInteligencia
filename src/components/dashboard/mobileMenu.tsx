@@ -25,6 +25,7 @@ import { useDataMarketsCategories } from "@/src/services/datamarket/service";
 import DataMarketMenu from "./mobileDatamarketMenu";
 import AccesoaMercadoIcon from "../svg/accesoamercado";
 import AlertaComercialIcon from "../svg/alertacomercial";
+import Post from "../svg/post";
 import AlertaIEDIcon from "../svg/alertaIED";
 import AlertaIEDSubscribe from "../alertaIED/Suscribe/suscribe";
 import Login from "../validate/login";
@@ -43,7 +44,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
     {
       href: "/dashboard/accesoamercado",
       icon: <AccesoaMercadoIcon color="navy" />,
-      text: "Acceso a Mercado",
+      text: "Acceso a Mercados",
     },
     {
       href: "/dashboard/alertacomercial",
@@ -54,6 +55,11 @@ export default function MobileMenu({ isOpen, onClose }: any) {
       href: "/dashboard/alertaIED",
       icon: <AlertaIEDIcon color="navy" />,
       text: "Alertas de IED",
+    },
+    {
+      href: "/dashboard/posts",
+      icon: <Post color="navy" />,
+      text: "Publicaciones",
     },
     {
       href: "/dashboard/partners",
@@ -71,7 +77,7 @@ export default function MobileMenu({ isOpen, onClose }: any) {
     {
       href: "/dashboard/settings/accesoamercado",
       icon: <AccesoaMercadoIcon color="navy" />,
-      text: "Acceso a Mercado",
+      text: "Acceso a Mercados",
     },
     {
       href: "/dashboard/settings/alertacomercial",

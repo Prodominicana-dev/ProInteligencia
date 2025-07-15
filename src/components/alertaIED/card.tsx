@@ -12,11 +12,14 @@ export default function AlertaIEDCard(data: AlertaIED) {
       <Card className="w-full mt-6 cursor-pointer group h-80">
         <CardHeader color="white" className="relative ">
           <Image
-            width={1920}
-            height={1080}
+            width={400}
+            height={220}
+            sizes="(max-width: 768px) 100vw, 25vw"
             src={`${process.env.NEXT_PUBLIC_API_URL}/data/alertaIED/${data.id}/img/${data.image}`}
             alt="card-image"
-            className="object-cover h-52"
+            className="object-cover h-52 w-full"
+            placeholder="blur"
+            blurDataURL="/images/placeholder.png"
           />
         </CardHeader>
         <CardBody>

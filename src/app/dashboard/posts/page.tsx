@@ -133,7 +133,12 @@ export default function Page() {
             autoPlay
             loop
             muted
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full 
+             [&::-webkit-media-controls]:!hidden
+             [&::-webkit-media-controls-enclosure]:!hidden
+             [&::-webkit-media-controls-panel]:!hidden
+             [&::-webkit-media-controls-play-button]:!hidden
+             [&::-webkit-media-controls-start-playback-button]:!hidden"
             src="/videos/datamarket.mp4"
           ></video>
         </div>

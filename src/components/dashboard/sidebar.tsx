@@ -43,6 +43,9 @@ export function Sidebar({ visible }: any) {
   const [hasPermission, setHasPermission] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [token] = useAtom(tokenAtom);
+  const [prevPath, setPrevPath] = useState<string | null>(null);
+
+  console.log("isConfig:", isConfig, "current path:", path);
   const permissionList = [
     "create:accesoamercados",
     "create:alertacomercial",
@@ -91,6 +94,8 @@ export function Sidebar({ visible }: any) {
 
   useEffect(() => {
     const hasConfigLocalStorage = localStorage.getItem("isConfig");
+    const storedPrev = localStorage.getItem("prevPath"); // <-- aquí leo la ruta guardada
+    if (storedPrev) setPrevPath(storedPrev); // <-- la pongo en el estado prevPath
     if (hasConfigLocalStorage === null) {
       localStorage.setItem("isConfig", "false");
       setIsConfig(false);
@@ -99,57 +104,88 @@ export function Sidebar({ visible }: any) {
       setIsConfig(isConfig);
     }
   }, []);
-
   const handleIsConfig = () => {
     const newIsConfig = !isConfig;
     localStorage.setItem("isConfig", newIsConfig.toString());
     setIsConfig(newIsConfig);
+
+    if (newIsConfig) {
+      // Guardar ruta previa solo si no estás ya en /dashboard/settings/*
+      if (!path.startsWith("/dashboard/settings")) {
+        localStorage.setItem("prevPath", path);
+      }
+
+      let settingsPath = path;
+
+      if (path === "/dashboard") {
+        // Si estás en el dashboard general, no redirigir
+        return;
+      } else if (path.startsWith("/dashboard/datamarket/")) {
+        // Si estás en un datamarket con ID, ir a configuración base sin ID
+        settingsPath = "/dashboard/settings/datamarket";
+      } else if (path.startsWith("/dashboard/")) {
+        // Para otras rutas, reemplazar dashboard por dashboard/settings
+        settingsPath = path.replace("/dashboard/", "/dashboard/settings/");
+      } else {
+        // Fallback
+        settingsPath = "/dashboard/settings/datamarket";
+      }
+
+      router.push(settingsPath);
+    } else {
+      // Al salir de configuración, volver a la ruta anterior si existe
+      const last = localStorage.getItem("prevPath") || "/dashboard";
+      router.push(last);
+      localStorage.removeItem("prevPath");
+    }
   };
 
-  useEffect(() => {
-    const url = path.split("/").pop();
-    if (path.includes("settings") && url === "datamarket") {
-      setDatamarketTitle("DataMarket");
-    }
-    if (
-      path.includes("settings") &&
-      !isConfig &&
-      !(
-        url === "datamarket" ||
-        url === "products" ||
-        url === "users" ||
-        url === "settings" || url === "domains" || url === "countries"
-      )
-    ) {
-      // dividir la url en un array por cada /
-      // obtener el ultimo elemento del array
-      return router.push(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/${url}`
-      );
-    }
-    if (isConfig && !(url === "dashboard" || url === "settings")) {
-      return Number(url) > 0
-        ? path.includes("alertacomercial")
-          ? router.push(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/alertacomercial`
-            )
-          : path.includes("accesoamercado")
-          ? router.push(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/accesoamercado`
-            )
-          : router.push(
-              `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/datamarket`
-            )
-        : router.push(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/${url}`
-          );
-    }
-    if (url === "settings" && isConfig) {
-      return router.push(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/datamarket`
-      );
-    }
-  }, [isConfig]);
+  // useEffect(() => {
+  //   const url = path.split("/").pop();
+  //   if (path.includes("settings") && url === "datamarket") {
+  //     setDatamarketTitle("DataMarket");
+  //   }
+  //   if (
+  //     path.includes("settings") &&
+  //     !isConfig &&
+  //     !(
+  //       url === "datamarket" ||
+  //       url === "products" ||
+  //       url === "users" ||
+  //       url === "settings" ||
+  //       url === "domains" ||
+  //       url === "countries"
+  //     )
+  //   ) {
+  //     // dividir la url en un array por cada /
+  //     // obtener el ultimo elemento del array
+  //     return router.push(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/${url}`
+  //     );
+  //   }
+  //   if (isConfig && !(url === "dashboard" || url === "settings")) {
+  //     return Number(url) > 0
+  //       ? path.includes("alertacomercial")
+  //         ? router.push(
+  //             `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/alertacomercial`
+  //           )
+  //         : path.includes("accesoamercado")
+  //         ? router.push(
+  //             `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/accesoamercado`
+  //           )
+  //         : router.push(
+  //             `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/datamarket`
+  //           )
+  //       : router.push(
+  //           `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/${url}`
+  //         );
+  //   }
+  //   if (url === "settings" && isConfig) {
+  //     return router.push(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/settings/datamarket`
+  //     );
+  //   }
+  // }, [isConfig]);
 
   const handleOpen = (value: any) => {
     setOpen(open === value ? 0 : value);
@@ -250,7 +286,11 @@ export function Sidebar({ visible }: any) {
                         />
                       ) : (
                         <Link
-                          href={`/dashboard/datamarket/${datamarket.data[0].id}`}
+                          href={
+                            isConfig
+                              ? `/dashboard/settings/datamarket`
+                              : `/dashboard/datamarket/${datamarket.data[0].id} `
+                          }
                           key={key}
                         >
                           <ListItem>
@@ -319,7 +359,6 @@ export function Sidebar({ visible }: any) {
                 url={"/dashboard/settings/products"}
                 iconUrl={"/svg/product/icon.svg"}
               />
-             
             </>
           ) : null}
           {isConfig ? (
@@ -329,7 +368,6 @@ export function Sidebar({ visible }: any) {
                 url={"/dashboard/settings/domains"}
                 iconUrl={"/svg/domains/icon.svg"}
               />
-             
             </>
           ) : null}
           {isConfig ? (
@@ -339,7 +377,6 @@ export function Sidebar({ visible }: any) {
                 url={"/dashboard/settings/countries"}
                 iconUrl={"/svg/country/icon.svg"}
               />
-             
             </>
           ) : null}
         </List>

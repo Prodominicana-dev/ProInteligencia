@@ -47,7 +47,7 @@ export function NavbarDashboard({ toggleSidebar, openDrawer, openNav }: any) {
     setSuscribeAlertaIED(!suscribeAlertaIED);
   };
   const router = useRouter();
-  console.log(pathname);
+  // console.log(pathname);
   return (
     <Navbar
       color="white"

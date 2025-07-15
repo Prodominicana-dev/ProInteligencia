@@ -69,7 +69,7 @@ export default function UserProfile() {
         href={`/api/auth/login?returnTo=${baseUrl}${pathname}`}
         className="flex items-center justify-center h-12 text-white rounded-lg shadow-sm w-36 bg-navy"
       >
-        Iniciar sesión
+        Iniciar sesión 
       </a>
     );
   }

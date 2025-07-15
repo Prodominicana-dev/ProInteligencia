@@ -5,6 +5,7 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import { RichTextEditor } from "@mantine/tiptap";
+
 import React from "react";
 import Image from "next/image";
 
@@ -41,9 +42,56 @@ export default function TextEditor({ editor }: any) {
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
-          <RichTextEditor.AlignLeft />
-          <RichTextEditor.AlignCenter />
-          <RichTextEditor.AlignRight />
+          <RichTextEditor.Control
+            title="Align text: left"
+            onClick={() => editor?.chain().focus().setTextAlign("left").run()}
+            active={editor?.isActive({ textAlign: "left" })}
+            aria-label="Align text: left"
+          >
+            <RichTextEditor.AlignLeft />
+          </RichTextEditor.Control>
+
+          <RichTextEditor.Control
+            title="Align text: center"
+            onClick={() => editor?.chain().focus().setTextAlign("center").run()}
+            active={editor?.isActive({ textAlign: "center" })}
+            aria-label="Align text: center"
+          >
+            <RichTextEditor.AlignCenter />
+          </RichTextEditor.Control>
+
+          <RichTextEditor.Control
+            title="Align text: right"
+            onClick={() => editor?.chain().focus().setTextAlign("right").run()}
+            active={editor?.isActive({ textAlign: "right" })}
+            aria-label="Align text: right"
+          >
+            <RichTextEditor.AlignRight />
+          </RichTextEditor.Control>
+
+          <RichTextEditor.Control
+            title="justify"
+            onClick={() =>
+              editor?.chain().focus().setTextAlign("justify").run()
+            }
+            active={editor?.isActive({ textAlign: "justify" })}
+            aria-label="justify"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+              />
+            </svg>
+          </RichTextEditor.Control>
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
@@ -83,7 +131,7 @@ export default function TextEditor({ editor }: any) {
               <MenuItem
                 onClick={() => editor?.chain().focus().addColumnAfter().run()}
               >
-                Añadir columna despues
+                Añadir columna después
               </MenuItem>
               <MenuItem
                 onClick={() => editor?.chain().focus().addRowBefore().run()}
@@ -93,7 +141,7 @@ export default function TextEditor({ editor }: any) {
               <MenuItem
                 onClick={() => editor?.chain().focus().addRowAfter().run()}
               >
-                Añadir fila despues
+                Añadir fila después
               </MenuItem>
               <hr className="my-2" />
               <MenuItem

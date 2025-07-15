@@ -30,6 +30,36 @@ import AccesoaMercado from "@/src/models/accesoamercado";
 import React from "react";
 
 const animatedComponents = makeAnimated();
+function isValidDateString(dateStr: string) {
+  return /^\d{2}\/\d{2}\/\d{4}$/.test(dateStr);
+}
+
+function parseDateString(dateStr: string): Date | null {
+  if (!isValidDateString(dateStr)) return null;
+
+  const [day, month, year] = dateStr.split("/").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  if (
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  ) {
+    return date;
+  }
+  return null;
+}
+
+function normalizeDateInput(dateStr: string): string {
+  const parts = dateStr.split("/");
+  if (parts.length !== 3) return dateStr;
+
+  let [day, month, year] = parts;
+  if (day.length === 1) day = "0" + day;
+  if (month.length === 1) month = "0" + month;
+
+  return `${day}/${month}/${year}`;
+}
 
 export default function AccesoaMercadoEditDialog({
   accesoamercado,
@@ -54,6 +84,7 @@ export default function AccesoaMercadoEditDialog({
   const { data, isLoading } = useAccesoaMercado(accesoamercado?.id);
   const [accesoamercadoData, setAccesoaMercadoData] = useState<any>([]);
   const [outputRequirement, setOutputRequirement] = useState<any>("");
+  const [productDATE, setProductDATE] = useState<any>("");
   const [importRequirement, setImportRequirement] = useState<any>("");
   const [technicalRequirements, setTechnicalRequirements] = useState<any>("");
   const [permitsCertifications, setPermitsCertifications] = useState<any>("");
@@ -62,6 +93,15 @@ export default function AccesoaMercadoEditDialog({
   const [tariffsImposed, setTariffsImposed] = useState<any>("");
   const [webResource, setWebResource] = useState<any>("");
   const [isLoadin, setIsLoadin] = useState(false);
+
+  // console.log("data", data);
+
+  // const date = new Date(data.date);
+  // const day = String(date.getDate()).padStart(2, "0");
+  // const month = String(date.getMonth() + 1).padStart(2, "0");
+  // const year = date.getFullYear();
+  // const formattedDate = `${day}/${month}/${year}`;
+
   const outputReq = Editor({
     placeholder: "Requisitos de exportacion...",
     content: data?.outputRequirement,
@@ -139,7 +179,16 @@ export default function AccesoaMercadoEditDialog({
       },
     ];
     setAccesoaMercadoData(accesoamercadodata);
-  });
+  }, [
+    outputReq,
+    importReq,
+    regTecnicas,
+    permCertf,
+    etiquetado,
+    acComerciales,
+    impAran,
+    recursos,
+  ]);
 
   useEffect(() => {
     if (countries && accesoamercados) {
@@ -189,23 +238,26 @@ export default function AccesoaMercadoEditDialog({
   };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && data && countries && products) {
       const accesoamercadoCountry = countries.find(
-        (country: any) => country.value.id === data.country.id
+        (country: any) => country.value.id === data.country?.id
       );
       setSelectedCountries(accesoamercadoCountry);
+
       const accesoamercadoProduct = products.find(
-        (product: any) => product.value.id === data.product.id
+        (product: any) => product.value.id === data.product?.id
       );
       setSelectedProducts(accesoamercadoProduct);
-      outputReq?.commands.setContent(data?.outputRequirement);
-      importReq?.commands.setContent(data?.importRequirement);
-      regTecnicas?.commands.setContent(data?.technicalRequirements);
-      permCertf?.commands.setContent(data?.permitsCertifications);
-      etiquetado?.commands.setContent(data?.labelingCertifications);
-      acComerciales?.commands.setContent(data?.tradeAgreement);
-      impAran?.commands.setContent(data?.tariffsImposed);
-      recursos?.commands.setContent(data?.webResource);
+
+      outputReq?.commands?.setContent(data?.outputRequirement);
+      importReq?.commands?.setContent(data?.importRequirement);
+      regTecnicas?.commands?.setContent(data?.technicalRequirements);
+      permCertf?.commands?.setContent(data?.permitsCertifications);
+      etiquetado?.commands?.setContent(data?.labelingCertifications);
+      acComerciales?.commands?.setContent(data?.tradeAgreement);
+      impAran?.commands?.setContent(data?.tariffsImposed);
+      recursos?.commands?.setContent(data?.webResource);
+
       setOutputRequirement(data?.outputRequirement);
       setImportRequirement(data?.importRequirement);
       setTechnicalRequirements(data?.technicalRequirements);
@@ -214,8 +266,17 @@ export default function AccesoaMercadoEditDialog({
       setTradeAgreement(data?.tradeAgreement);
       setTariffsImposed(data?.tariffsImposed);
       setWebResource(data?.webResource);
+
+      if (data?.date) {
+        const date = new Date(data.date);
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+        const formattedDate = `${day}/${month}/${year}`;
+        setProductDATE(formattedDate);
+      }
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, countries, products]);
 
   useEffect(() => {
     setOutputRequirement(outputReq?.getHTML());
@@ -239,6 +300,33 @@ export default function AccesoaMercadoEditDialog({
 
   const handleSubmit = async () => {
     setIsLoadin(true);
+    const normalizedDateStr = productDATE
+      ? normalizeDateInput(productDATE)
+      : "";
+   if (normalizedDateStr && !isValidDateString(normalizedDateStr)) {
+    setIsLoadin(false);
+    notifications.show({
+      title: "Fecha inválida",
+      message: "Por favor ingrese una fecha válida en formato dd/mm/aaaa.",
+      color: "red",
+      autoClose: 5000,
+    });
+    return;
+  }
+
+    const parsedDate = normalizedDateStr ? parseDateString(normalizedDateStr) : null;
+
+  if (normalizedDateStr && !parsedDate) {
+    setIsLoadin(false);
+    notifications.show({
+      title: "Fecha inválida",
+      message: "Por favor ingrese una fecha válida en formato dd/mm/aaaa.",
+      color: "red",
+      autoClose: 5000,
+    });
+    return;
+  }
+
     const data = {
       countryId: Number(selectedCountries.value.id),
       productId: selectedProducts.value.id,
@@ -250,8 +338,9 @@ export default function AccesoaMercadoEditDialog({
       tradeAgreement: tradeAgreement,
       tariffsImposed: tariffsImposed,
       webResource: webResource,
+      date: parsedDate ? parsedDate.toISOString() : null,
     };
-    console.log(data.outputRequirement);
+    // console.log(data.outputRequirement);
     if (!accesoamercado) {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/accesoamercado`,
@@ -363,6 +452,31 @@ export default function AccesoaMercadoEditDialog({
                   options={productSelect}
                   className="z-[9999] "
                 />
+              </div>
+              <div className="w-6/12">
+                <div className="text-lg font-bold text-black">Fecha</div>
+                <div className="react-select-container">
+                  <div
+                    className="react-select__control"
+                    style={{
+                      padding: "6px 12px",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      placeholder="dd/mm/aaaa"
+                      value={productDATE}
+                      onChange={(e) => setProductDATE(e.target.value)}
+                      className="w-full text-base  text-black focus:outline-none bg-transparent"
+                      style={{
+                        border: "none",
+                        outline: "none",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 

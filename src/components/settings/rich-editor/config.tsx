@@ -12,14 +12,33 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
+import FontSize from "../extensions/FontSize";
 
 export default function Editor({ placeholder, content }: any) {
   return useEditor({
     extensions: [
       StarterKit.configure({
+        paragraph: {
+          HTMLAttributes: {
+            class: "text-black font-light",
+          },
+        },
+
+        bold: {
+          HTMLAttributes: {
+            class: "font-bold text-gray-900",
+          },
+        },
+
         bulletList: {
           HTMLAttributes: {
-            class: "text-black",
+            class: "text-black list-disc pl-4",
+          },
+        },
+
+        orderedList: {
+          HTMLAttributes: {
+            class: "text-black list-decimal pl-4",
           },
         },
       }),
@@ -28,30 +47,36 @@ export default function Editor({ placeholder, content }: any) {
       Highlight,
       Table.configure({
         HTMLAttributes: {
-          style:
-            "padding: 1.5rem; border-radius: 0.5rem; border-width: 2px;	border-color: rgb(243 244 246);",
+          class:
+            "p-6 rounded-lg border-2 border-gray-200",
         },
         resizable: true,
       }),
       TableRow.configure({
         HTMLAttributes: {
-          style: "border-width: 2px;	border-color: rgb(243 244 246);",
+          class: "border-2 border-gray-200",
         },
       }),
       TableCell.configure({
         HTMLAttributes: {
-          style: "border-width: 2px;	border-color: rgb(243 244 246);",
+          class: "border-2 border-gray-200",
         },
       }),
       TableHeader.configure({
         HTMLAttributes: {
-          style: "border-width: 2px;	border-color: rgb(243 244 246);",
+          class: "border-2 border-gray-200",
         },
       }),
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Placeholder.configure({
-        placeholder: placeholder,
+
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+        alignments: ["left", "center", "right", "justify"],
       }),
+
+      Placeholder.configure({
+        placeholder,
+      }),
+
       Img.configure({
         inline: true,
         HTMLAttributes: {
@@ -61,6 +86,6 @@ export default function Editor({ placeholder, content }: any) {
       }),
     ],
 
-    content: content,
+    content,
   });
 }

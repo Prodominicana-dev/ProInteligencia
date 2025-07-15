@@ -14,7 +14,13 @@ export default function Background({ color, video }: any) {
         autoPlay
         loop
         muted
-        className="w-full h-screen fixed object-cover"
+        className="w-full h-screen fixed object-cover
+          [&::-webkit-media-controls]:!hidden
+             [&::-webkit-media-controls-enclosure]:!hidden
+             [&::-webkit-media-controls-panel]:!hidden
+             [&::-webkit-media-controls-play-button]:!hidden
+             [&::-webkit-media-controls-start-playback-button]:!hidden
+        "
         src={`${currentVideo}`}
       ></video>
       <div className={`fixed inset-0 ${color} object-cover`}></div>

@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, ChangeEvent, useMemo } from "react";
 import AlertaIED from "@/src/models/alertaIED";
-import { useState, useEffect, ChangeEvent } from "react";
 import {
   PlusIcon,
   AdjustmentsHorizontalIcon,
@@ -22,149 +21,139 @@ import NotFound from "@/src/components/validate/notFound";
 
 export default function Page() {
   const [data, setData] = useState<AlertaIED[]>([]);
-  const [filteredData, setFilteredData] = useState<AlertaIED[]>([]);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Todos");
-  const [open, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [filterAlertasIED, setFilterAlertasIED] = useState([]);
-  const [status, setStatus] = useState("");
-  const [total, setTotal] = useState(0);
+  const [search, setSearch] = useState<string>("");
+  const [category, setCategory] = useState<string>("Todos");
+  const [open, setOpen] = useState<boolean>(false);
+  const [refresh, setRefresh] = useState<boolean>(false);
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const [filterAlertasIED, setFilterAlertasIED] = useState<string[]>([]);
+  const [status, setStatus] = useState<string>("");
+  const [total, setTotal] = useState<number>(0);
 
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  const update = () => {
-    setRefresh(!refresh);
-  };
   const { data: d, refetch } = useAlertasIED();
+  const pagination = useAlertasIEDPage();
+  const { data: categories, isLoading } = useAlertasIEDCategory();
+
+
   useEffect(() => {
-    setData(d);
-    setTotal(d?.length);
+    if (d) {
+      setData(d);
+      setTotal(d.length);
+    }
   }, [d]);
 
-  const pagination = useAlertasIEDPage();
+  
+  useEffect(() => {
+    (async () => {
+      const res = await refetch();
+      if (res?.data) {
+        setData(res.data);
+        setTotal(res.data.length);
+      }
+      pagination.refetch();
+    })();
+  }, [refresh, refetch, pagination]);
 
   useEffect(() => {
-    refetch().then((res: any) => {
-      setData(res.data);
-      setTotal(res.data?.length);
+    if (!isLoading && categories) {
+      const names = categories.map((c: Category) => c.name);
+      names.unshift("Todos");
+      setFilterAlertasIED(names);
+    }
+  }, [categories, isLoading]);
+
+
+  const handleOpen = () => setOpen((prev) => !prev);
+
+  const handleFilterOpen = () => setFilterOpen((prev) => !prev);
+
+  const handleFilter = (selectedCategory: string | null) => {
+    const statusToFilter = status || "active";
+    const categoryToFilter = selectedCategory || "Todos";
+    setCategory(categoryToFilter);
+
+    const filtered = data.filter((alerta) => {
+      const matchCategory =
+        categoryToFilter.toLowerCase() === "todos"
+          ? true
+          : alerta.category.name.toLowerCase() ===
+            categoryToFilter.toLowerCase();
+      const matchStatus =
+        alerta.status.toLowerCase() === statusToFilter.toLowerCase();
+      return matchCategory && matchStatus;
     });
-    pagination.refetch();
-  }, [refresh, refetch]);
 
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data, setFilteredData]);
+    setTotal(filtered.length);
+    setFilteredData(filtered);
+  };
+
+  const handleStatus = (selectedStatus: string | null) => {
+    const statusToFilter = selectedStatus || "active";
+    setStatus(statusToFilter);
+
+    const filtered = data.filter((alerta) => {
+      const matchStatus =
+        alerta.status.toLowerCase() === statusToFilter.toLowerCase();
+      const matchCategory =
+        category.toLowerCase() === "todos"
+          ? true
+          : alerta.category.name.toLowerCase() === category.toLowerCase();
+      return matchStatus && matchCategory;
+    });
+
+    setTotal(filtered.length);
+    setFilteredData(filtered);
+  };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const filterData = () => {
-    const filteredByCategory =
-      category === "Todos"
+  const filteredData = useMemo(() => {
+    let filteredByCategory =
+      category.toLowerCase() === "todos"
         ? data
         : data.filter(
-            (alertaIED) =>
-              alertaIED.category.name.toLowerCase() === category.toLowerCase()
+            (alerta) =>
+              alerta.category.name.toLowerCase() === category.toLowerCase()
           );
 
-    let filteredBySearch;
-
-    if (!status) {
-      // Si no se ha seleccionado un estado, mostrar todos los registros
-      filteredBySearch = filteredByCategory.filter(
-        (alertaIED) =>
-          alertaIED.title.toLowerCase().includes(search.toLowerCase()) ||
-          alertaIED.category.name.toLowerCase().includes(search.toLowerCase())
-      );
-    } else {
-      // Si se ha seleccionado un estado, filtrar por estado y búsqueda
-      filteredBySearch = filteredByCategory.filter(
-        (alertaIED) =>
-          alertaIED.status.toLowerCase() === status.toLowerCase() &&
-          (alertaIED.title.toLowerCase().includes(search.toLowerCase()) ||
-            alertaIED.category.name
-              .toLowerCase()
-              .includes(search.toLowerCase()))
+    if (status) {
+      filteredByCategory = filteredByCategory.filter(
+        (alerta) => alerta.status.toLowerCase() === status.toLowerCase()
       );
     }
-    setTotal(filteredBySearch?.length);
-    setFilteredData(filteredBySearch);
-  };
 
-  useEffect(() => {
-    filterData();
-  }, [search, category]);
-
-  const { data: categories, isLoading } = useAlertasIEDCategory();
-  useEffect(() => {
-    if (!isLoading) {
-      const names = categories.map((category: Category) => category.name);
-      names.unshift("Todos");
-      setFilterAlertasIED(names);
+    if (!search) {
+      setTotal(filteredByCategory.length);
+      return filteredByCategory;
     }
-  }, [categories, isLoading]);
+
+    const filteredBySearch = filteredByCategory.filter(
+      (alerta) =>
+        alerta.title.toLowerCase().includes(search.toLowerCase()) ||
+        alerta.category.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setTotal(filteredBySearch.length);
+    return filteredBySearch;
+  }, [data, category, status, search]);
+
+  
+  const isVisible = filterOpen ? "visible" : "hidden";
+
+  const [filteredDataState, setFilteredData] = useState<AlertaIED[]>([]);
+  useEffect(() => {
+    setFilteredData(filteredData);
+  }, [filteredData]);
 
   const statusAlertasIED = [
     { label: "Publicados", value: "active" },
     { label: "Ocultos", value: "deleted" },
   ];
 
-  const handleFilter = (selectedCategory: string | null) => {
-    const statusToFilter = status || "active";
-    const categoryToFilter = selectedCategory || "Todos";
 
-    if (categoryToFilter.toLowerCase() == "todos") {
-      const AlertaIEDByCategory = data.filter(
-        (alertaIED) =>
-          alertaIED.status.toLowerCase() === statusToFilter.toLowerCase()
-      );
-      setCategory(categoryToFilter);
-      setFilteredData(AlertaIEDByCategory);
-      setTotal(AlertaIEDByCategory?.length);
-    } else {
-      const AlertaIEDByCategory = data.filter(
-        (alertaIED) =>
-          alertaIED.category.name.toLowerCase() ===
-            categoryToFilter.toLowerCase() &&
-          alertaIED.status.toLowerCase() === statusToFilter.toLowerCase()
-      );
-      setCategory(categoryToFilter);
-      setFilteredData(AlertaIEDByCategory);
-      setTotal(AlertaIEDByCategory?.length);
-    }
-  };
-
-  const handleStatus = (selectedStatus: string | null) => {
-    const statusToFilter = selectedStatus || "active";
-    const categoryToFilter = category || "Todos";
-
-    const AlertaIEDByStatus =
-      categoryToFilter !== "Todos"
-        ? data.filter(
-            (alertaIED) =>
-              alertaIED.status.toLowerCase() === statusToFilter.toLowerCase() &&
-              alertaIED.category.name.toLowerCase() ===
-                categoryToFilter.toLowerCase()
-          )
-        : data.filter(
-            (alertaIED) =>
-              alertaIED.status.toLowerCase() === statusToFilter.toLowerCase()
-          );
-    setStatus(statusToFilter);
-    setFilteredData(AlertaIEDByStatus);
-    setTotal(AlertaIEDByStatus?.length);
-  };
-
-  const handleFilterOpen = () => {
-    setFilterOpen(!filterOpen);
-  };
-
-  const isVisible = filterOpen ? "visible" : "hidden";
+  const update = () => setRefresh((prev) => !prev);
 
   return (
     <>
@@ -257,30 +246,22 @@ export default function Page() {
                 </button>
               </div>
             </div>
-            {/* AlertasIEDS */}
-            {filteredData?.length === 0 ? (
+
+            {filteredDataState.length === 0 ? (
               <NotFound />
             ) : (
-              <>
-                <div className="grid w-full h-full grid-cols-1 gap-10 px-8 py-4 sm:grid-cols-2 lg:grid-cols-4 ">
-                  <button
-                    className="hidden sm:flex items-center justify-center w-full duration-300 border-2 border-black border-dashed cursor-pointer h-[28rem] rounded-3xl hover:bg-gray-200"
-                    onClick={handleOpen}
-                  >
-                    <PlusIcon className="w-16 h-16 text-black" />
-                  </button>
+              <div className="grid w-full h-full grid-cols-1 gap-10 px-8 py-4 sm:grid-cols-2 lg:grid-cols-4 ">
+                <button
+                  className="hidden sm:flex items-center justify-center w-full duration-300 border-2 border-black border-dashed cursor-pointer h-[28rem] rounded-3xl hover:bg-gray-200"
+                  onClick={handleOpen}
+                >
+                  <PlusIcon className="w-16 h-16 text-black" />
+                </button>
 
-                  {filteredData?.map((alertaIED) => {
-                    return (
-                      <SCard
-                        key={alertaIED.id}
-                        data={alertaIED}
-                        update={update}
-                      />
-                    );
-                  })}
-                </div>
-              </>
+                {filteredDataState.map((alertaIED) => (
+                  <SCard key={alertaIED.id} data={alertaIED} update={update} />
+                ))}
+              </div>
             )}
 
             <AlertaIEDDialog

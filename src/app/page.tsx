@@ -26,6 +26,8 @@ import PolicyDialog from "@/src/components/landing/dialog/policy";
 import { usePathname } from "next/navigation";
 import { Bars3BottomLeftIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import UserProfile from "@/src/components/dashboard/userprofile";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Page() {
   // const autoplay = useRef(Autoplay({ delay: 5000 }));
@@ -41,6 +43,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
   const [openCollapse, setOpenCollapse] = useState(false);
+  const { user } = useUser();
 
   const handleCollapse = () => {
     setOpenCollapse(!openCollapse);
@@ -73,7 +76,7 @@ export default function Page() {
         "Analice datos y estadísticas de comercio internacional e inversión extranjera directa con Data Market. Conozca las tendencias en compras internacionales y las oportunidades para su negocio mediante la inteligencia de mercado.",
       image: "/svg/datamarket/datamarket.svg",
       imageWhite: "/svg/datamarket/datamarket-white.svg",
-      link: "/dashboard/datamarket/242fe1e0-327e-405e-8611-f60f96c67e57",
+      link: "/dashboard/datamarket/9faad239-824a-46cf-992d-7f6b89617728",
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
@@ -118,7 +121,7 @@ export default function Page() {
         "Analice datos y estadísticas de comercio internacional e inversión extranjera directa con Data Market. Conozca las tendencias en compras internacionales y las oportunidades para su negocio mediante la inteligencia de mercado.",
       image: "/svg/datamarket/datamarket.svg",
       imageWhite: "/svg/datamarket/datamarket-white.svg",
-      link: "/dashboard/datamarket/242fe1e0-327e-405e-8611-f60f96c67e57",
+      link: "/dashboard/datamarket/9faad239-824a-46cf-992d-7f6b89617728",
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
@@ -165,7 +168,13 @@ export default function Page() {
         autoPlay
         loop
         muted
-        className="absolute top-0 left-0 object-cover w-full h-full -z-10"
+        className="absolute top-0 left-0 object-cover w-full h-full -z-10
+           [&::-webkit-media-controls]:!hidden
+             [&::-webkit-media-controls-enclosure]:!hidden
+             [&::-webkit-media-controls-panel]:!hidden
+             [&::-webkit-media-controls-play-button]:!hidden
+             [&::-webkit-media-controls-start-playback-button]:!hidden
+        "
         src="/videos/digitalworld.mp4"
       ></video>
       <div className="absolute inset-0 border-0 bg-gradient-to-r from-[#000072]/60 to-[#07ef96]/60"></div>
@@ -208,7 +217,7 @@ export default function Page() {
                     className="flex flex-row items-center gap-1 px-5 py-3 text-black rounded-lg outline-none hover:bg-transparent hover:text-mint bg-gray-50"
                     href={"/dashboard/partners"}
                   >
-                    Recursos
+                    Fuentes externas
                   </Link>
                   <a
                     href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
@@ -242,7 +251,7 @@ export default function Page() {
                   <div className="cursor-pointer">Herramientas</div>
                 </MenuHandler>
                 <MenuList className="flex flex-col gap-4 p-4 text-black bg-white">
-                  {tools.slice(5).map((tool, index) => (
+                  {tools.slice(0, 4).map((tool, index) => (
                     <Link
                       key={index}
                       className="outline-none hover:bg-transparent hover:text-mint"
@@ -253,8 +262,48 @@ export default function Page() {
                   ))}
                 </MenuList>
               </Menu>
-              <Link href="/dashboard/partners">Recursos</Link>
-              <a
+              <Menu allowHover>
+                <MenuHandler>
+                  <div className="cursor-pointer">Recursos</div>
+                </MenuHandler>
+                <MenuList className="flex flex-col gap-4 p-4 text-black bg-white">
+                  {tools.slice(4, 5).map((tool, index) => (
+                    <Link
+                      key={index}
+                      className="outline-none hover:bg-transparent hover:text-mint"
+                      href={tool.link}
+                    >
+                      {tool.title}
+                    </Link>
+                  ))}
+                  <Link
+                    className="outline-none hover:bg-transparent hover:text-mint"
+                    href={"/dashboard/partners"}
+                  >
+                    Fuentes externas
+                  </Link>
+                </MenuList>
+              </Menu>
+              {/* <Link href="/dashboard/partners">Recursos </Link> */}
+              {user ? (
+                <UserProfile />
+              ) : (
+                <>
+                  <a
+                    href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                    className="px-5 py-2 text-center text-green-400 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+                  >
+                    Regístrate
+                  </a>
+                  <a
+                    href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
+                    className="px-5 py-2 text-center bg-green-400 border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
+                  >
+                    Accede
+                  </a>
+                </>
+              )}
+              {/* <a
                 href={`/api/auth/login?returnTo=${baseUrl}/dashboard`}
                 className="px-5 py-2 bg-transparent border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
               >
@@ -265,7 +314,7 @@ export default function Page() {
                 className="px-5 py-2 bg-green-400 border-2 border-green-400 rounded-full shadow-greenn hover:shadow-greenHover hover:bg-green-400"
               >
                 Accede
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

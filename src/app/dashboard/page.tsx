@@ -65,7 +65,13 @@ function ToolCard({ name, video, link }: any) {
     >
       <video
         ref={videoRef}
-        className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-125"
+        className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-125
+         [&::-webkit-media-controls]:!hidden
+             [&::-webkit-media-controls-enclosure]:!hidden
+             [&::-webkit-media-controls-panel]:!hidden
+             [&::-webkit-media-controls-play-button]:!hidden
+             [&::-webkit-media-controls-start-playback-button]:!hidden
+        "
         muted
         loop
       >

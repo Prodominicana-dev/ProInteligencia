@@ -14,6 +14,7 @@ import {
   useDataMarketsCategories,
 } from "@/src/services/datamarket/service";
 import React from "react";
+import axios from "axios";
 
 export default function DatamarketDialog({
   datamarket,
@@ -33,8 +34,14 @@ export default function DatamarketDialog({
   const [datamarketCategory, setDatamarketCategory] = useState(
     datamarket?.category
   );
+  const [categoryPriority, setCategoryPriority] = useState<number | undefined>(
+    datamarket?.categoryPriority
+  );
   const { data } = useDataMarketsCategories();
   const [isLoading, setIsLoading] = useState(false);
+
+  const showPriorityInput =
+    datamarket && datamarketCategory === "Comercio de bienes";
 
   const handleDatamarketSubmit = async () => {
     setIsLoading(true);
@@ -50,9 +57,26 @@ export default function DatamarketDialog({
 
     const action = datamarket ? updateDatamarket : createDatamarket;
 
-    action({ datamarket: data, handleOpen, updateDatamarkets }).then(() => {
+    try {
+      await action({ datamarket: data, handleOpen, updateDatamarkets });
+
+      // Si es comercio de bienes y se está editando, hacer patch para actualizar prioridad
+      if (showPriorityInput && typeof categoryPriority === "number") {
+        await axios.patch(
+          `${process.env.NEXT_PUBLIC_API_URL}/datamarket/update/categories`,
+          {
+            id: datamarket.id,
+            category: "Comercio de bienes",
+            categoryPriority: categoryPriority,
+          }
+        );
+        updateDatamarkets();
+      }
+    } catch (error) {
+      console.error("Error al actualizar:", error);
+    } finally {
       setIsLoading(false);
-    });
+    }
   };
 
   return (
@@ -88,6 +112,25 @@ export default function DatamarketDialog({
                 <option key={index} value={value.category} />
               ))}
             </datalist>
+
+            {showPriorityInput && (
+              <Input
+                type="number"
+                min={1}
+                max={data?.length || 10}
+                label="Posición"
+                value={categoryPriority === undefined ? "" : categoryPriority}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "") {
+                    setCategoryPriority(undefined);
+                  } else {
+                    setCategoryPriority(Number(value));
+                  }
+                }}
+                crossOrigin=""
+              />
+            )}
             <Button
               className="bg-navy"
               disabled={

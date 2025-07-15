@@ -217,7 +217,7 @@ export default function AccesoaMercadoCreateDialog({
       tariffsImposed: tariffsImposed,
       webResource: webResource,
     };
-    console.log(data.outputRequirement);
+    // console.log(data.outputRequirement);
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/accesoamercado`,
       data

@@ -30,6 +30,7 @@ import Category from "@/src/models/category";
 import { useAlertaComercialesCategory } from "@/src/services/alertacomercial/service";
 import { useSelectCountries } from "@/src/services/countries/service";
 import { useSelectProducts } from "@/src/services/products/service";
+import { parse } from "date-fns";
 import React from "react";
 
 const animatedComponents = makeAnimated();
@@ -60,6 +61,24 @@ export default function AlertaComercialDialog({
   const [refresh, setRefresh] = useState(false);
   const { refetch } = useSelectProducts();
   const [isLoadin, setIsLoadin] = useState(false);
+  const [dateValue, setDateValue] = useState<string>("");
+  const [isDateValid, setIsDateValid] = useState<boolean>(false);
+  const currentDate = format(new Date(), "dd MMMM yyyy", { locale: es });
+  // console.log('categories', categories);
+  // console.log("alertacomercial", alertacomercial?.date);
+
+  const validateDate = (dateStr: string): boolean => {
+    if (!dateStr || dateStr.trim() === "") return false;
+
+    try {
+      const parsedDate = parse(dateStr, "dd MMMM yyyy", new Date(), {
+        locale: es,
+      });
+      return !isNaN(parsedDate.getTime());
+    } catch {
+      return false;
+    }
+  };
 
   const openRef = useRef<() => void>(null);
   const handleClickSelectFile = () => {
@@ -88,6 +107,10 @@ export default function AlertaComercialDialog({
     //pagination.refetch();
   }, [refresh, refetch]);
 
+  useEffect(() => {
+    setIsDateValid(validateDate(dateValue));
+  }, [dateValue]);
+
   const updateProducts = () => {
     setRefresh(!refresh);
   };
@@ -115,6 +138,16 @@ export default function AlertaComercialDialog({
         }
       );
       setSelectedProducts(alertacomercialProducts);
+       console.log("alertacomercial en useEffect:", alertacomercial);
+
+      if (alertacomercial?.date) {
+        const parsedDate = new Date(alertacomercial.date);
+        const formatted = format(parsedDate, "dd MMMM yyyy", { locale: es });
+        setDateValue(formatted);
+        setIsDateValid(true); // Fecha existente es válida
+      } else {
+        setIsDateValid(false); // No hay fecha o es inválida
+      }
     }
   }, [alertacomercial]);
 
@@ -133,6 +166,9 @@ export default function AlertaComercialDialog({
 
     const products = selectedProducts.map((product: any) => product.value);
     const countries = selectedCountries.map((country: any) => country.value);
+    const parsedDate = parse(dateValue, "dd MMMM yyyy", new Date(), {
+      locale: es,
+    });
 
     formData.append("title", title);
     formData.append(
@@ -143,6 +179,7 @@ export default function AlertaComercialDialog({
     formData.append("countries", JSON.stringify(countries));
     formData.append("products", JSON.stringify(products));
     formData.append("isPublic", isPublic ? "true" : "false");
+    formData.append("date", parsedDate.toISOString());
 
     if (files.length > 0) {
       formData.append("file", files[0]);
@@ -175,6 +212,8 @@ export default function AlertaComercialDialog({
         setTitle("");
         setSelectedCountries([]);
         setSelectedProducts([]);
+        setDateValue("");
+        setIsDateValid(false);
         return;
       }
       notifications.show({
@@ -294,10 +333,12 @@ export default function AlertaComercialDialog({
               onChange={(e) => setTitle(e.target.value)}
               defaultValue={alertacomercial ? title : ""}
             />
-            <div className="text-xs font-light text-neutral-500">
-              {format(Date.now(), "dd MMMM yyyy", { locale: es })}
-            </div>
-
+            <input
+              className="w-full my-2 text-xl font-bold text-black placeholder-black resize-none sm:text-base"
+              placeholder={currentDate}
+              onChange={(e) => setDateValue(e.target.value)}
+              value={dateValue}
+            />
             <div className="my-3">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -441,16 +482,13 @@ export default function AlertaComercialDialog({
                 <>
                   <Button
                     disabled={
-                      !alertacomercial
-                        ? title === "" ||
-                          editor1?.isEmpty ||
-                          files.length === 0 ||
-                          selectedCountries.length === 0 ||
-                          selectedProducts.length === 0
-                        : title === "" ||
-                          editor1?.isEmpty ||
-                          selectedCountries.length === 0 ||
-                          selectedProducts.length === 0
+                      title === "" ||
+                      editor1?.isEmpty ||
+                      selectedCountries.length === 0 ||
+                      selectedProducts.length === 0 ||
+                      dateValue.trim() === "" ||
+                      !isDateValid ||
+                      (!alertacomercial && files.length === 0)
                     }
                     onClick={() => handleSubmit()}
                     color="green"
@@ -460,16 +498,13 @@ export default function AlertaComercialDialog({
                   {alertacomercial?.published === false || !alertacomercial ? (
                     <Button
                       disabled={
-                        !alertacomercial
-                          ? title === "" ||
-                            editor1?.isEmpty ||
-                            files.length === 0 ||
-                            selectedCountries.length === 0 ||
-                            selectedProducts.length === 0
-                          : title === "" ||
-                            editor1?.isEmpty ||
-                            selectedCountries.length === 0 ||
-                            selectedProducts.length === 0
+                        title === "" ||
+                        editor1?.isEmpty ||
+                        selectedCountries.length === 0 ||
+                        selectedProducts.length === 0 ||
+                        dateValue.trim() === "" ||
+                        !isDateValid ||
+                        (!alertacomercial && files.length === 0)
                       }
                       onClick={() => handleSubmit(true)}
                       color="green"
