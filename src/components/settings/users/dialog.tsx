@@ -43,7 +43,7 @@ export default function UserDialog({
     if (user && userRoles && roles) {
       setUserName(user.name);
       setUserEmail(user.email);
-      console.log(userRoles);
+      // console.log(userRoles);
       const userRole = userRoles.map((rol: any) => {
         return { value: rol.id, label: rol.name };
       });

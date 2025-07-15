@@ -47,7 +47,7 @@ export default function DomainDialog({
             name: name,
             platform: platform
         }
-        console.log(data)
+        // console.log(data)
         await createDomain(data, updateProducts);
         handleOpen();
     }

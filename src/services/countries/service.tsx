@@ -9,7 +9,7 @@ export function useCountries() {
     queryFn: async () => {
       const url = `${process.env.NEXT_PUBLIC_API_URL}/countries`;
       const { data } = await axios.get(url);
-      console.log(data)
+      // console.log(data)
       return data.map((item: country) => item);
     },
   });

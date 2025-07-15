@@ -193,7 +193,7 @@ export default function Page() {
     };
     const response = await axios.request(config);
     if (response.status === 200) {
-      console.log(response.data);
+      // console.log(response.data);
       notifications.show({
         title: "Perfíl actualizado",
         message: "Tu perfíl ha sido actualizado exitosamente",

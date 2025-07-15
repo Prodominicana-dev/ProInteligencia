@@ -19,7 +19,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!isLoading) {
-      console.log(data);
+      // console.log(data);
       setPosts(filteredPosts());
       setCategories(data.categories);
       setTypes(data.types);

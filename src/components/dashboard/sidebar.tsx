@@ -45,7 +45,7 @@ export function Sidebar({ visible }: any) {
   const [token] = useAtom(tokenAtom);
   const [prevPath, setPrevPath] = useState<string | null>(null);
 
-  console.log("isConfig:", isConfig, "current path:", path);
+  // console.log("isConfig:", isConfig, "current path:", path);
   const permissionList = [
     "create:accesoamercados",
     "create:alertacomercial",

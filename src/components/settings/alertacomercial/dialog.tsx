@@ -138,7 +138,7 @@ export default function AlertaComercialDialog({
         }
       );
       setSelectedProducts(alertacomercialProducts);
-       console.log("alertacomercial en useEffect:", alertacomercial);
+      //  console.log("alertacomercial en useEffect:", alertacomercial);
 
       if (alertacomercial?.date) {
         const parsedDate = new Date(alertacomercial.date);

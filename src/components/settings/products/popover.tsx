@@ -29,7 +29,7 @@ export default function ProductPopover({
       name: productName,
       code: productCode,
     };
-    console.log(product);
+    // console.log(product);
     createProduct({ product, handleOpen, updateProducts });
     setProductName("");
     setProductCode("");

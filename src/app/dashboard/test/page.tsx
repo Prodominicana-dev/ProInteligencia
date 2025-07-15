@@ -15,7 +15,7 @@ import Html from "react-pdf-html";
 
 export default function Page() {
   const { data, isLoading } = useAccesoaMercado("");
-  console.log(data);
+  // console.log(data);
   const [accesoamercadoData, setAccesoaMercadoData] = useState<any>([]);
   useEffect(() => {
     if (!isLoading) {

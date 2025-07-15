@@ -92,7 +92,7 @@ export async function editAlertaComercialSub(
       `${process.env.NEXT_PUBLIC_API_URL}/suscriber/alertacomercial`,
       sub,
     );
-    console.log(res)
+    // console.log(res)
     if (res.status === 200) {
         notifications.show({
             title: "¡Suscripción Exitosa!",

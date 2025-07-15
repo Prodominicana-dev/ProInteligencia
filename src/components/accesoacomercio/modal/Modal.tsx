@@ -20,7 +20,6 @@ import { useAccesoaMercado } from "@/src/services/accesoamercados/service";
 import DownloadPDF from "../downloadPDF";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import html2pdf from "html2pdf.js";
 
 export default function Modal({ id }: any) {
   const { data, isLoading }: any = useAccesoaMercado(id);

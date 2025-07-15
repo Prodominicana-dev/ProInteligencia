@@ -55,7 +55,7 @@ domain,
             name: name,
             platform: platform
         }
-        console.log(data)
+        // console.log(data)
         await editDomain(domain.id, data, updateProducts);
         handleOpen();
     }

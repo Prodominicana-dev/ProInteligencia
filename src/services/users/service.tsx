@@ -24,7 +24,7 @@ export function useUsers() {
     queryFn: async () => {
       const url = `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users`;
       const { data } = await axios.get(url, header);
-      console.log(header);
+      // console.log(header);
       return data;
     },
   });
