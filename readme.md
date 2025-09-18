@@ -1,34 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# ProInteligencia
 
-First, run the development server:
+Plataforma web desarrollada con Next.js y TypeScript para la gestión y visualización de inteligencia comercial, sectorial y de mercado. Incluye módulos para acceso a mercados, alertas comerciales, análisis de inversión extranjera, gestión de socios, productos y más.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Características principales
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Dashboard interactivo y personalizable
+- Módulos de acceso a mercados, alertas comerciales e IED
+- Gestión de usuarios, socios, productos y publicaciones
+- Integración con Google Analytics
+- Estilos con Tailwind CSS y PostCSS
+- Tipografías y recursos gráficos personalizados
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- `src/app/` - Páginas y layout principal
+- `src/components/` - Componentes reutilizables por módulo
+- `src/models/` - Modelos de datos TypeScript
+- `src/services/` - Lógica de negocio y acceso a datos
+- `src/state/` - Gestión de estado global
+- `public/` - Recursos estáticos (imágenes, fuentes, SVG, videos)
 
-## Learn More
+## Instalación y desarrollo
 
-To learn more about Next.js, take a look at the following resources:
+1. Clona el repositorio:
+	```bash
+	git clone https://github.com/Prodominicana-dev/ProInteligencia.git
+	cd ProInteligencia
+	```
+2. Instala las dependencias:
+	```bash
+	npm install
+	# o
+	yarn install
+	```
+3. Inicia el servidor de desarrollo:
+	```bash
+	npm run dev
+	# o
+	yarn dev
+	```
+4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Despliegue
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+El despliegue recomendado es en [Vercel](https://vercel.com/) o cualquier plataforma compatible con Next.js.
 
-## Deploy on Vercel
+## Dependencias principales
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- PostCSS
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Configuración adicional
+
+- Edita `public/config.json` para parámetros personalizados.
+- Las fuentes y gráficos se encuentran en `public/fonts` y `public/images`.
+
+## Autores y licencia
+
+Desarrollado por Prodominicana-dev. Para contribuciones, abre un issue o pull request.
+
+Licencia: MIT
