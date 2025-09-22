@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { data }: any = useDataMarket(params.id);
-  const [, setDatamarketTitle] = useAtom(datamarketTitleAtom);
+  const [, setDatamarketTitle] = useAtom(datamarketTitleAtom);  
   useEffect(() => {
     if (!data) return;
     setDatamarketTitle(data.title);

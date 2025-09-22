@@ -76,7 +76,7 @@ export default function Page() {
         "Analice datos y estadísticas de comercio internacional e inversión extranjera directa con Data Market. Conozca las tendencias en compras internacionales y las oportunidades para su negocio mediante la inteligencia de mercado.",
       image: "/svg/datamarket/datamarket.svg",
       imageWhite: "/svg/datamarket/datamarket-white.svg",
-      link: "/dashboard/datamarket/35ab9fd9-5d87-4b88-b0f7-f5c23a82f0f9",
+      link: "/dashboard/datamarket/242fe1e0-327e-405e-8611-f60f96c67e57",
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
@@ -121,7 +121,7 @@ export default function Page() {
         "Analice datos y estadísticas de comercio internacional e inversión extranjera directa con Data Market. Conozca las tendencias en compras internacionales y las oportunidades para su negocio mediante la inteligencia de mercado.",
       image: "/svg/datamarket/datamarket.svg",
       imageWhite: "/svg/datamarket/datamarket-white.svg",
-      link: "/dashboard/datamarket/35ab9fd9-5d87-4b88-b0f7-f5c23a82f0f9",
+      link: "/dashboard/datamarket/242fe1e0-327e-405e-8611-f60f96c67e57",
       color: "from-purple-500  via-sky-400 to-green-300",
     },
     {
