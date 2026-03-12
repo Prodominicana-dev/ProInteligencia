@@ -8,7 +8,7 @@ import { Carousel as Carrusel } from "@material-tailwind/react";
 import Slide from "@/src/components/landing/alertaIED/slide";
 import { MantineProvider } from "@mantine/core";
 import Partners from "@/src/components/landing/partner/section";
-import { Montserrat } from "@next/font/google";
+import { Montserrat } from 'next/font/google'
 
 const monserratStyle = Montserrat({ subsets: ["latin"] });
 
