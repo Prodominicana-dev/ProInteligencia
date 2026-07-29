@@ -300,7 +300,7 @@ export function Sidebar({ visible }: any) {
                             {datamarket.data[0].title}
                           </ListItem>
                         </Link>
-                      )
+                      ),
                     )
                   ) : (
                     <ListItem>Loading...</ListItem>
@@ -337,6 +337,69 @@ export function Sidebar({ visible }: any) {
             }
             iconUrl={"/svg/alertaIED/alertaIED-white.svg"}
           />
+          {isConfig ? (
+            <Accordion
+              open={open === 2}
+              icon={
+                <ChevronDownIcon
+                  strokeWidth={2.5}
+                  className={`mx-auto h-4 w-4 transition-transform opacity-0 group-hover:opacity-100 hidden group-hover:flex text-white ${
+                    open === 2 ? "rotate-180" : ""
+                  }`}
+                />
+              }
+            >
+              <ListItem className="p-0" selected={open === 2}>
+                <AccordionHeader
+                  onClick={() => handleOpen(2)}
+                  className="p-3 border-b-0"
+                >
+                  <ListItemPrefix>
+                    <Image
+                      src={"/svg/country/icon.svg"}
+                      width={600}
+                      height={600}
+                      draggable={false}
+                      alt=""
+                      className="text-white duration-700 size-12 group-hover:h-7 group-hover:w-7"
+                    />
+                  </ListItemPrefix>
+                  <Typography
+                    color="white"
+                    className="hidden mr-auto font-normal duration-300 opacity-0 group-hover:flex group-hover:opacity-100"
+                  >
+                    Perfiles de Países
+                  </Typography>
+                </AccordionHeader>
+              </ListItem>
+              <AccordionBody className="py-1">
+                <List className="p-0 text-white">
+                  <Link href={"/dashboard/settings/perfilespaises"}>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <div></div>
+                      </ListItemPrefix>
+                      Perfiles
+                    </ListItem>
+                  </Link>
+                  <Link href={"/dashboard/settings/regions"}>
+                    <ListItem>
+                      <ListItemPrefix>
+                        <div></div>
+                      </ListItemPrefix>
+                      Regiones
+                    </ListItem>
+                  </Link>
+                </List>
+              </AccordionBody>
+            </Accordion>
+          ) : (
+            <SidebarItem
+              title={"Perfiles de Países"}
+              url={"/dashboard/perfilespaises"}
+              iconUrl={"/svg/country/icon.svg"}
+            />
+          )}
 
           <SidebarItem
             title={"Publicaciones"}

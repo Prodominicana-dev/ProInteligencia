@@ -35,6 +35,7 @@ import axios from "axios";
 import { hasAnyPermission } from "./navbar";
 import React from "react";
 import DashboardIcon from "../svg/dashboardIcon";
+import CountryProfileIcon from "../svg/countryProfile";
 
 export default function MobileMenu({ isOpen, onClose }: any) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -55,6 +56,11 @@ export default function MobileMenu({ isOpen, onClose }: any) {
       href: "/dashboard/alertaIED",
       icon: <AlertaIEDIcon color="white" />,
       text: "Alertas de IED",
+    },
+      {
+      href: "/dashboard/perfilespaises",
+      icon: <CountryProfileIcon color="white" />,
+      text: "Perfiles de Países",
     },
     {
       href: "/dashboard/posts",
@@ -108,6 +114,16 @@ export default function MobileMenu({ isOpen, onClose }: any) {
       href: "/dashboard/settings/countries",
       icon: <AlertaIEDIcon color="white" />,
       text: "Países/Mercados",
+    },
+     {
+      href: "/dashboard/settings/perfilespaises",
+      icon: <CountryProfileIcon color="white" />,
+      text: "Perfiles de Países",
+    },
+    {
+      href: "/dashboard/settings/regions",
+      icon: <CountryProfileIcon color="white" />,
+      text: "Regiones",
     },
   ];
   const { user } = useUser();
