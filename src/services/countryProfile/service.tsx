@@ -7,9 +7,15 @@ interface CountryProfileProps {
   countryProfile: any;
   handleOpen: () => void;
   updateCountryProfiles: () => void;
+  onUploadError?: () => void;
 }
 
-// Todos los perfiles (incluye inactivos) — usado en el panel de configuración
+// URL interna del servidor, usada SOLO para subir archivos (evita el
+// limite de tiempo de Cloudflare en peticiones largas). Solo funciona
+// para usuarios conectados a la red interna de la oficina.
+export const INTERNAL_UPLOAD_URL = "https://192.168.0.81:8081/apiv2/country-profile";
+
+// Todos los perfiles (incluye inactivos) - usado en el panel de configuracion
 export function useCountryProfiles() {
   return useQuery({
     queryKey: ["countryProfiles"],
@@ -21,7 +27,7 @@ export function useCountryProfiles() {
   });
 }
 
-// Perfiles activos — usado en la vista pública
+// Perfiles activos - usado en la vista publica
 export function useActiveCountryProfiles() {
   return useQuery({
     queryKey: ["activeCountryProfiles"],
@@ -48,17 +54,18 @@ export function createCountryProfile({
   countryProfile,
   handleOpen,
   updateCountryProfiles,
+  onUploadError,
 }: CountryProfileProps) {
   return axios
-    .post(`${process.env.NEXT_PUBLIC_API_URL}/country-profile`, countryProfile)
+    .post(INTERNAL_UPLOAD_URL, countryProfile)
     .then((res) => {
       if (res.status === 200) {
         notifications.show({
           id: "countryProfile",
           autoClose: 5000,
           withCloseButton: false,
-          title: "Perfil de país agregado",
-          message: "El perfil de país ha sido creado correctamente.",
+          title: "Perfil de pais agregado",
+          message: "El perfil de pais ha sido creado correctamente.",
           color: "green",
           loading: false,
         });
@@ -67,15 +74,19 @@ export function createCountryProfile({
       }
     })
     .catch(() => {
-      notifications.show({
-        id: "countryProfile",
-        autoClose: 5000,
-        withCloseButton: false,
-        title: "Error",
-        message: "El perfil de país no se ha creado correctamente.",
-        color: "red",
-        loading: false,
-      });
+      if (onUploadError) {
+        onUploadError();
+      } else {
+        notifications.show({
+          id: "countryProfile",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Error",
+          message: "El perfil de pais no se ha creado correctamente.",
+          color: "red",
+          loading: false,
+        });
+      }
     });
 }
 
@@ -84,20 +95,18 @@ export function updateCountryProfile({
   countryProfile,
   handleOpen,
   updateCountryProfiles,
+  onUploadError,
 }: CountryProfileProps) {
   return axios
-    .patch(
-      `${process.env.NEXT_PUBLIC_API_URL}/country-profile/${id}`,
-      countryProfile
-    )
+    .patch(`${INTERNAL_UPLOAD_URL}/${id}`, countryProfile)
     .then((res) => {
       if (res.status === 200) {
         notifications.show({
           id: "countryProfile",
           autoClose: 5000,
           withCloseButton: false,
-          title: "Perfil de país editado",
-          message: "El perfil de país ha sido actualizado correctamente.",
+          title: "Perfil de pais editado",
+          message: "El perfil de pais ha sido actualizado correctamente.",
           color: "green",
           loading: false,
         });
@@ -106,15 +115,19 @@ export function updateCountryProfile({
       }
     })
     .catch(() => {
-      notifications.show({
-        id: "countryProfile",
-        autoClose: 5000,
-        withCloseButton: false,
-        title: "Error",
-        message: "El perfil de país no se ha actualizado correctamente.",
-        color: "red",
-        loading: false,
-      });
+      if (onUploadError) {
+        onUploadError();
+      } else {
+        notifications.show({
+          id: "countryProfile",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Error",
+          message: "El perfil de pais no se ha actualizado correctamente.",
+          color: "red",
+          loading: false,
+        });
+      }
     });
 }
 
@@ -131,8 +144,8 @@ export function deleteCountryProfile({
           id: "countryProfile",
           autoClose: 5000,
           withCloseButton: false,
-          title: "Perfil de país eliminado",
-          message: "El perfil de país ha sido eliminado correctamente.",
+          title: "Perfil de pais eliminado",
+          message: "El perfil de pais ha sido eliminado correctamente.",
           color: "green",
           loading: false,
         });
@@ -146,7 +159,7 @@ export function deleteCountryProfile({
         autoClose: 5000,
         withCloseButton: false,
         title: "Error",
-        message: "El perfil de país no se ha eliminado correctamente.",
+        message: "El perfil de pais no se ha eliminado correctamente.",
         color: "red",
         loading: false,
       });
