@@ -7,7 +7,13 @@ interface PostsProps {
   post: any;
   handleOpen: () => void;
   updatePosts: () => void;
+  onUploadError?: () => void;
 }
+
+// URL interna del servidor, usada SOLO para subir archivos (evita el
+// limite de tiempo de Cloudflare en peticiones largas). Solo funciona
+// para usuarios conectados a la red interna de la oficina.
+export const INTERNAL_POST_UPLOAD_URL = "https://192.168.0.81:8081/apiv2/post";
 
 export function usePosts() {
   return useQuery({
@@ -31,46 +37,22 @@ export function usePost(id: string) {
   });
 }
 
-export function createPost({ post, handleOpen, updatePosts }: PostsProps) {
+export function createPost({
+  post,
+  handleOpen,
+  updatePosts,
+  onUploadError,
+}: PostsProps) {
   return axios
-    .post(`${process.env.NEXT_PUBLIC_API_URL}/post`, post)
+    .post(INTERNAL_POST_UPLOAD_URL, post)
     .then((res) => {
       if (res.status === 200) {
         notifications.show({
           id: "post",
           autoClose: 5000,
           withCloseButton: false,
-          title: "Fuente de información agregada",
-          message: "La publicación ha sido creada correctamente.",
-          color: "green",
-          loading: false,
-        });
-        handleOpen();
-        updatePosts();
-      }
-      notifications.show({
-        id: "post",
-        autoClose: 5000,
-        withCloseButton: false,
-        title: "Error",
-        message: "La publicación no se ha creado correctamente.",
-        color: "green",
-        loading: false,
-      });
-    });
-}
-
-export function updatePost({ id, post, handleOpen, updatePosts }: PostsProps) {
-  return axios
-    .patch(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, post)
-    .then((res) => {
-      if (res.status === 200) {
-        notifications.show({
-          id: "post",
-          autoClose: 5000,
-          withCloseButton: false,
-          title: "Publicacion editada",
-          message: "La publicación ha sido actualizado correctamente.",
+          title: "Fuente de informacion agregada",
+          message: "La publicacion ha sido creada correctamente.",
           color: "green",
           loading: false,
         });
@@ -82,7 +64,73 @@ export function updatePost({ id, post, handleOpen, updatePosts }: PostsProps) {
           autoClose: 5000,
           withCloseButton: false,
           title: "Error",
-          message: "La publicación no se ha actualizado correctamente.",
+          message: "La publicacion no se ha creado correctamente.",
+          color: "red",
+          loading: false,
+        });
+      }
+    })
+    .catch(() => {
+      if (onUploadError) {
+        onUploadError();
+      } else {
+        notifications.show({
+          id: "post",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Error",
+          message: "La publicacion no se ha creado correctamente.",
+          color: "red",
+          loading: false,
+        });
+      }
+    });
+}
+
+export function updatePost({
+  id,
+  post,
+  handleOpen,
+  updatePosts,
+  onUploadError,
+}: PostsProps) {
+  return axios
+    .patch(`${INTERNAL_POST_UPLOAD_URL}/${id}`, post)
+    .then((res) => {
+      if (res.status === 200) {
+        notifications.show({
+          id: "post",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Publicacion editada",
+          message: "La publicacion ha sido actualizado correctamente.",
+          color: "green",
+          loading: false,
+        });
+        handleOpen();
+        updatePosts();
+      } else {
+        notifications.show({
+          id: "post",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Error",
+          message: "La publicacion no se ha actualizado correctamente.",
+          color: "red",
+          loading: false,
+        });
+      }
+    })
+    .catch(() => {
+      if (onUploadError) {
+        onUploadError();
+      } else {
+        notifications.show({
+          id: "post",
+          autoClose: 5000,
+          withCloseButton: false,
+          title: "Error",
+          message: "La publicacion no se ha actualizado correctamente.",
           color: "red",
           loading: false,
         });
