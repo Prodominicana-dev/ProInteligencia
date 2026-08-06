@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Select } from "@mantine/core";
 import { useActiveCountryProfiles } from "@/src/services/countryProfile/service";
 import CountryProfileCard from "@/src/components/countryProfile/card";
+import RequestProfileModal from "@/src/components/countryProfile/requestModal";
 import CountryProfile from "@/src/models/countryProfile";
 import Region from "@/src/models/region";
 import NotFound from "@/src/components/validate/notFound";
@@ -72,6 +73,9 @@ export default function Page() {
 
   return (
     <div className="w-full h-full">
+      {/* Invitación a solicitar un perfil de país que aún no existe */}
+      <RequestProfileModal />
+
       {/* Encabezado con degradado de marca, distinto al azul del sidebar */}
       <div className="w-full bg-gradient-to-tr from-purpurita via-morado to-celeste">
         <div className="flex flex-col items-center justify-center w-full px-5 py-16 sm:px-0 sm:py-20">
