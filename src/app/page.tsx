@@ -162,6 +162,16 @@ export default function Page() {
     },
   ];
 
+  const perfilesPaises = {
+    title: "Perfiles de Países",
+    description:
+      "Consulta información detallada sobre los perfiles de países para conocer sus características, oportunidades y desafíos en el comercio internacional.",
+    image: "/svg/pais/pais.svg",
+    imageWhite: "/svg/pais/pais-white.svg",
+    link: "/dashboard/perfilespaises",
+    color: "from-purple-500  via-sky-400 to-green-300",
+  };
+
   return (
     <div className="relative w-full min-h-screen font-montserrat">
       <video
@@ -204,7 +214,7 @@ export default function Page() {
                   />
                 </div>
                 <div className="flex flex-col gap-3 px-4">
-                  {tools.slice(5).map((tool, index) => (
+                  {[...tools.slice(5), perfilesPaises].map((tool, index) => (
                     <Link
                       key={index}
                       className="flex flex-row items-center gap-1 px-5 py-3 text-black rounded-lg outline-none hover:bg-transparent hover:text-mint bg-gray-50"
@@ -251,7 +261,7 @@ export default function Page() {
                   <div className="cursor-pointer">Herramientas</div>
                 </MenuHandler>
                 <MenuList className="flex flex-col gap-4 p-4 text-black bg-white">
-                  {tools.slice(0, 4).map((tool, index) => (
+                  {[...tools.slice(0, 4), perfilesPaises].map((tool, index) => (
                     <Link
                       key={index}
                       className="outline-none hover:bg-transparent hover:text-mint"
