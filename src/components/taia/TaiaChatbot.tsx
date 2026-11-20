@@ -167,7 +167,7 @@ export default function TaiaChatbot() {
               src={URL_CHATBOT}
               title={t.iframe}
               className="h-full w-full border-none"
-              allow="microphone; autoplay; clipboard-write"
+              allow="microphone; autoplay; clipboard-write; display-capture"
             />
           </div>
 
