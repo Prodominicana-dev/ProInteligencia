@@ -3,6 +3,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { ReactNode } from "react";
 import React from "react";
 import GoogleAnalytics from "../components/googleAnalytics";
+import TaiaChatbot from "../components/taia/TaiaChatbot";
 
 export const metadata = {
   title: "ProInteligencia",
@@ -26,6 +27,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <></>
           )}
           {children}
+          {/* Burbuja de TAIA, la asistente virtual de ProDominicana */}
+          <TaiaChatbot />
         </body>
       </html>
     </UserProvider>
