@@ -10,7 +10,8 @@ import { usePathname } from "next/navigation";
  * se muestra dentro de un iframe. El iframe solo se carga la primera vez que se abre la burbuja,
  * para no sumar peso a la carga inicial del sitio. Permite el micrófono para el modo de voz.
  */
-const URL_CHATBOT = "https://chatbot.prodominicana.gob.do/embed";
+// Se puede cambiar con NEXT_PUBLIC_TAIA_URL (por ejemplo, para probar con el chatbot local)
+const URL_CHATBOT = process.env.NEXT_PUBLIC_TAIA_URL || "https://chatbot.prodominicana.gob.do/embed";
 
 const ICONO = "/images/taia-avatar.webp";
 
@@ -91,6 +92,29 @@ export default function TaiaChatbot() {
     ];
     return () => tiempos.forEach(clearTimeout);
   }, [visible]);
+
+  // "Explícame lo que estoy viendo": TAIA (dentro del iframe) pide el texto visible de la página
+  // y aquí se le responde con el título, la dirección y el texto. Solo al chat de TAIA.
+  useEffect(() => {
+    const origenChat = new URL(URL_CHATBOT).origin;
+    const alPedir = (e: MessageEvent) => {
+      if (e.data?.tipo !== "taia-pedir-pantalla") return;
+      if (e.origin !== origenChat && !/^http:\/\/localhost(:\d+)?$/.test(e.origin)) return;
+      const raiz = document.querySelector("main") || document.body;
+      const texto = (raiz as HTMLElement).innerText.replace(t.saludo, "").slice(0, 8000);
+      // Tableros de Power BI y otros iframes: no se pueden leer, pero se dice que están
+      const tableros = Array.from(document.querySelectorAll("iframe"))
+        .filter((f) => !f.src.startsWith(origenChat))
+        .map((f) => f.title || new URL(f.src, location.href).hostname)
+        .slice(0, 5);
+      (e.source as Window | null)?.postMessage(
+        { tipo: "taia-pantalla", pantalla: { url: location.href, titulo: document.title, texto, tableros } },
+        e.origin
+      );
+    };
+    window.addEventListener("message", alPedir);
+    return () => window.removeEventListener("message", alPedir);
+  }, [t.saludo]);
 
   // Escape cierra el chat
   useEffect(() => {
