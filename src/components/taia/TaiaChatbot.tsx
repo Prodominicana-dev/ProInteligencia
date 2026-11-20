@@ -45,7 +45,11 @@ const ANIMACION = `
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.taia-saludo { animation: taia-saludo-entra 0.45s ease-out both; transform-origin: 100% 100%; }
+@keyframes taia-saludo-flota {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.taia-saludo { animation: taia-saludo-entra 0.45s ease-out both, taia-saludo-flota 4s ease-in-out 0.45s infinite; transform-origin: 100% 100%; }
 .taia-punto { animation: taia-punto 1s ease-in-out infinite; }
 .taia-texto { animation: taia-texto-entra 0.3s ease-out both; }
 .taia-flota { animation: taia-flotar 4s ease-in-out infinite; transform-origin: 50% 85%; }
@@ -60,7 +64,8 @@ export default function TaiaChatbot() {
   const [abierto, setAbierto] = useState(false);
   const [cargado, setCargado] = useState(false);
   const [visible, setVisible] = useState(false);
-  // Saludo al cargar la página: puntos de "escribiendo", luego el texto, y se oculta solo. Una vez por sesión.
+  // Saludo en cada carga de página: puntos de "escribiendo" y luego el texto, que queda flotando
+  // junto al avatar hasta que la persona lo cierra con la X o abre el chat.
   const [saludo, setSaludo] = useState<"no" | "escribiendo" | "texto">("no");
   const en = (usePathname() || "").startsWith("/en");
   const t = en
@@ -80,15 +85,10 @@ export default function TaiaChatbot() {
 
   useEffect(() => {
     if (!visible) return;
-    let yaSaludo = false;
-    try { yaSaludo = sessionStorage.getItem("taia-saludo") === "1"; } catch {}
-    if (yaSaludo) return;
     const tiempos = [
       setTimeout(() => setSaludo("escribiendo"), 1200),
       setTimeout(() => setSaludo((s) => (s === "escribiendo" ? "texto" : s)), 2400),
-      setTimeout(() => setSaludo("no"), 14000),
     ];
-    try { sessionStorage.setItem("taia-saludo", "1"); } catch {}
     return () => tiempos.forEach(clearTimeout);
   }, [visible]);
 
